@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta name="theme-color" content="#0B1F33" >
+    <title> AgriScan - تحليل</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" >
+</head>
+
+
+<body>
+    <section class="screen analysis-screen">
+        <div class="analysis-container">
+            <!-- Back Button -->
+            <button
+                class="back-btn" id="backToScan" type="button" >
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+            <!-- Header -->
+
+            <div class="analysis-header">
+                <div class="analysis-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h1> تحليل التربة </h1>
+                <p> نتائج فحص التربة الخاصة بك </p>
+            </div>
+
+            <!-- Overall Result -->
+
+            <div class="overall-result">
+
+                <div class="result-check">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+                <div class="result-text">
+                    <span> الصحة العامة للتربة </span>
+                    <h2> جيدة </h2>
+                    <p> تربتك مناسبة للزراعة. </p>
+                </div>
+
+                <div class="health-score">
+                    <strong> 82% </strong>
+                    <span> درجة صحة التربة </span>
+
+                </div>
+
+            </div>
+
+            <!-- Detected Problems -->
+            <div class="analysis-section">
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-label"> حالة التربة </span>
+                        <h2> المشكلات المكتشفة </h2>
+                    </div>
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+
+                <!-- Issue -->
+
+                <div class="issue-card">
+                    <div class="issue-icon warning">
+                        <i class="fa-solid fa-arrow-down"></i>
+                    </div>
+
+                    <div class="issue-content">
+                        <h3> انخفاض النيتروجين </h3>
+                        <p> مستوى النيتروجين أقل من النطاق الموصى به لنمو المحاصيل بشكل صحي.</p>
+                        <span class="issue-value"> الحالي: 18 ملجم/كجم </span>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <!-- Soil Measurements -->
+
+            <div class="analysis-section">
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-label"> القياسات </span>
+                        <h2> خصائص التربة </h2>
+                    </div>
+                    <i class="fa-solid fa-flask"></i>
+                </div>
+
+
+                <div class="analysis-grid">
+                    <!-- pH -->
+
+                    <div class="analysis-card">
+                        <div class="analysis-card-icon">
+                            <i class="fa-solid fa-flask"></i>
+                        </div>
+                        <span> مستوى الحموضة pH </span>
+                        <strong> 6.4 </strong>
+                        <small class="normal"> طبيعي </small>
+                    </div>
+
+                    <!-- Moisture -->
+
+                    <div class="analysis-card">
+                        <div class="analysis-card-icon">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <span> الرطوبة </span>
+                        <strong> 42% </strong>
+                        <small class="normal"> جيدة </small>
+                    </div>
+
+
+                    <!-- Temperature -->
+                    <div class="analysis-card">
+                        <div class="analysis-card-icon">
+                            <i class="fa-solid fa-temperature-half"></i>
+                        </div>
+                        <span> درجة الحرارة </span>
+                        <strong> 25°C </strong>
+                        <small class="normal"> طبيعية </small>
+                    </div>
+
+
+                    <!-- Nitrogen -->
+                    <div class="analysis-card">
+                        <div class="analysis-card-icon">
+
+                            <i class="fa-solid fa-leaf"></i>
+
+                        </div>
+                        <span> النيتروجين </span>
+                        <strong> 18 </strong>
+                        <small class="low"> منخفض </small>
+                    </div>
+
+
+                    <!-- Phosphorus -->
+                    <div class="analysis-card">
+                        <div class="analysis-card-icon">
+                            <i class="fa-solid fa-atom"></i>
+                        </div>
+                        <span> الفوسفور </span>
+                        <strong> 32 </strong>
+                        <small class="normal"> جيد </small>
+                    </div>
+
+
+                    <!-- Potassium -->
+
+                    <div class="analysis-card">
+                        <div class="analysis-card-icon">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <span> البوتاسيوم </span>
+                        <strong> 15 </strong>
+                        <small class="normal"> جيد </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI Recommendation -->
+
+            <div class="recommendation-card">
+                <div class="recommendation-header">
+                    <div class="ai-icon">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+
+                    <div>
+                        <span> AgriScan AI </span>
+                        <h2> التوصيات </h2>
+                    </div>
+
+                </div>
+                <p> حالة التربة لديك جيدة بشكل عام، ولكن مستوى النيتروجين منخفض. يُنصح باستخدام سماد مناسب غني بالنيتروجين ومتابعة حالة التربة مرة أخرى بعد المعالجة. </p>
+
+                <button class="recommendation-btn" id="viewCropDetails" type="button" >
+                    <i class="fa-solid fa-seedling"></i>
+                    عرض توصيات المحاصيل
+                </button>
+            </div>
+
+            <!-- Scan Information -->
+
+            <div class="scan-info">
+                <div>
+                    <i class="fa-regular fa-calendar"></i>
+                    <span> تاريخ الفحص </span>
+                    <strong> اليوم </strong>
+                </div>
+                <div>
+                    <i class="fa-solid fa-microchip"></i>
+                    <span> الجهاز </span>
+                    <strong> AG-001 </strong>
+                </div>
+            </div>
+
+
+            <!-- Save Result -->
+
+            <button class="save-result-btn" id="saveResultBtn" type="button" >
+                <i class="fa-solid fa-bookmark"></i>
+                حفظ نتيجة الفحص
+            </button>
+        </div>
+    </section>
+
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

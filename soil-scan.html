@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B1F33">
+    <title>AgriScan - فحص التربة</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <section class="screen soil-scan-screen">
+        <div class="soil-scan-container">
+
+            <!-- Back Button -->
+            <button class="back-btn" id="backToConnect" type="button">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="scan-header">
+                <div class="scan-header-icon">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <h1> فحص التربة </h1>
+                <p> جاري تحليل حالة التربة الخاصة بك </p>
+            </div>
+
+            <!-- Device Status -->
+            <div class="scan-device-status">
+                <div class="device-status-icon">
+                    <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div class="device-status-info">
+                    <span> الجهاز المتصل </span>
+                    <strong> AgriScan AG-001 </strong>
+                </div>
+                <div class="online-status">
+                    <i class="fa-solid fa-circle"></i>
+                    متصل
+                </div>
+            </div>
+
+            <!-- Scanning Area -->
+            <div class="scanning-area" id="scanningArea">
+                <div class="scan-circle">
+                    <div class="scan-circle-inner">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                </div>
+                <h2> جاري فحص التربة... </h2>
+                <p> يرجى إبقاء الجهاز داخل التربة. </p>
+
+                <!-- Progress -->
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span> تقدم الفحص </span>
+                        <strong id="progressText"> 0% </strong>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Measurements -->
+            <div class="live-measurements">
+                <h2> القياسات المباشرة </h2>
+                <div class="scan-measurements-grid">
+                    <!-- pH -->
+                    <div class="scan-measurement-card">
+                        <div class="measurement-icon">
+                            <i class="fa-solid fa-flask"></i>
+                        </div>
+                        <div>
+                            <span> درجة الحموضة </span>
+                            <strong id="phValue"> -- </strong>
+                        </div>
+                    </div>
+
+                    <!-- Moisture -->
+                    <div class="scan-measurement-card">
+                        <div class="measurement-icon">
+                            <i class="fa-solid fa-droplet"></i>
+                        </div>
+                        <div>
+                            <span> الرطوبة </span>
+                            <strong id="moistureValue"> -- </strong>
+                        </div>
+                    </div>
+
+                    <!-- Temperature -->
+                    <div class="scan-measurement-card">
+                        <div class="measurement-icon">
+                            <i class="fa-solid fa-temperature-half"></i>
+                        </div>
+                        <div>
+                            <span> درجة الحرارة </span>
+                            <strong id="temperatureValue"> -- </strong>
+                        </div>
+                    </div>
+
+                    <!-- Nitrogen -->
+                    <div class="scan-measurement-card">
+                        <div class="measurement-icon">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <div>
+                            <span> النيتروجين </span>
+                            <strong id="nitrogenValue"> -- </strong>
+                        </div>
+                    </div>
+
+                    <!-- Phosphorus -->
+                    <div class="scan-measurement-card">
+                        <div class="measurement-icon">
+                            <i class="fa-solid fa-atom"></i>
+                        </div>
+                        <div>
+                            <span> الفوسفور </span>
+                            <strong id="phosphorusValue"> -- </strong>
+                        </div>
+                    </div>
+
+                    <!-- Potassium -->
+                    <div class="scan-measurement-card">
+                        <div class="measurement-icon">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <div>
+                            <span> البوتاسيوم </span>
+                            <strong id="potassiumValue"> -- </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scan Completed -->
+            <div class="scan-completed hidden" id="scanCompleted">
+                <div class="completed-icon">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2> اكتمل الفحص </h2>
+                <p> قياسات التربة الخاصة بك جاهزة للتحليل. </p>
+                <button class="analysis-btn" id="viewAnalysisBtn" type="button">
+                    <i class="fa-solid fa-chart-line"></i>
+                    عرض التحليل
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>

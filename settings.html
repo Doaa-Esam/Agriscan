@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B1F33">
+    <title>AgriScan - الإعدادات</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <section class="screen settings-screen">
+
+        <!-- settings-container -->
+        <div class="settings-container">
+            <button class="back-btn" id="backToDashboardFromSettings" type="button"><i class="fa-solid fa-arrow-left"></i></button>
+            <div class="settings-header">
+                <div class="settings-header-icon"><i class="fa-solid fa-gear"></i></div>
+                <h1>الإعدادات</h1>
+                <p>إدارة تفضيلات AgriScan الخاصة بك</p>
+            </div>
+
+            <!-- settings-section -->
+            <div class="settings-section">
+                <h2>الحساب</h2>
+                <div class="settings-card">
+                    <div class="settings-icon"><i class="fa-solid fa-user"></i></div>
+                    <div class="settings-info"><strong>الملف الشخصي</strong><span>إدارة معلوماتك الشخصية</span></div>
+                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <!-- settings-card -->
+                <div class="settings-card">
+                    <div class="settings-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="settings-info"><strong>كلمة المرور</strong><span>تغيير كلمة مرور حسابك</span></div>
+                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- settings-section -->
+            <div class="settings-section">
+                <h2>تفضيلات التطبيق</h2>
+                <div class="settings-card">
+                    <div class="settings-icon"><i class="fa-solid fa-bell"></i></div>
+                    <div class="settings-info"><strong>الإشعارات</strong><span>استقبال إشعارات فحص التربة</span></div>
+                    <label class="switch"><input type="checkbox" id="notificationToggle" checked><span class="slider"></span></label>
+                </div>
+                <div class="settings-card">
+                    <div class="settings-icon"><i class="fa-solid fa-language"></i></div>
+                    <div class="settings-info"><strong>اللغة</strong><span id="languageText">العربية</span></div>
+                    <button class="settings-arrow" id="languageBtn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- settings-section -->
+            <div class="settings-section">
+                <h2>الجهاز</h2>
+                <div class="settings-card">
+                    <div class="settings-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <div class="settings-info"><strong>جهاز AgriScan</strong><span>الجهاز متصل</span></div>
+                    <span class="connected-status">متصل</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h2>الدعم</h2>
+                <div class="settings-card">
+                    <div class="settings-icon"><i class="fa-solid fa-circle-question"></i></div>
+                    <div class="settings-info"><strong>المساعدة والدعم</strong><span>احصل على المساعدة في استخدام AgriScan</span></div>
+                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <!-- settings-card -->
+                <div class="settings-card">
+                    <div class="settings-icon"><i class="fa-solid fa-circle-info"></i></div>
+                    <div class="settings-info"><strong>عن AgriScan</strong><span>إصدار التطبيق 1.0.0</span></div>
+                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <button class="logout-btn" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>
+        </div>
+    </section>
+
+   <!-- JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>

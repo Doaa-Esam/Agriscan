@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B1F33">
+    <title>AgriScan - سجل الفحوصات</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <section class="screen history-screen">
+
+        <!-- history-container -->
+        <div class="history-container">
+            <button class="back-btn" id="backToDashboard" type="button"><i class="fa-solid fa-arrow-left"></i></button>
+            <div class="history-header">
+                <div class="history-header-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <h1>سجل الفحوصات</h1>
+                <p>عرض نتائج تحاليل التربة السابقة</p>
+            </div>
+
+            <!-- history-summary -->
+            <div class="history-summary">
+                <div class="history-summary-item">
+                    <i class="fa-solid fa-flask"></i>
+                    <div><strong>12</strong><span>إجمالي الفحوصات</span></div>
+                </div>
+                <div class="history-summary-item">
+                    <i class="fa-solid fa-seedling"></i>
+                    <div><strong>8</strong><span>فحوصات جيدة</span></div>
+                </div>
+            </div>
+
+            <!-- history-section -->
+            <div class="history-section">
+                <div class="history-section-title"><span>اليوم</span><i class="fa-regular fa-calendar"></i></div>
+                <div class="history-card" data-scan="1">
+                    <div class="history-card-icon good"><i class="fa-solid fa-seedling"></i></div>
+                    <div class="history-card-content">
+                        <h3>الحقل 1</h3>
+                        <span class="history-status good-text">حالة التربة: جيدة</span>
+                        <p>درجة الحموضة 6.4 • النيتروجين منخفض</p>
+                        <small><i class="fa-regular fa-clock"></i> اليوم، 08:30 مساءً</small>
+                    </div>
+                    <button class="history-view-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+
+                <!-- history-card -->
+                <div class="history-card" data-scan="2">
+                    <div class="history-card-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div class="history-card-content">
+                        <h3>المزرعة A</h3>
+                        <span class="history-status warning-text">تحتاج إلى اهتمام</span>
+                        <p>درجة الحموضة 5.8 • الرطوبة منخفضة</p>
+                        <small><i class="fa-regular fa-clock"></i> اليوم، 03:15 مساءً</small>
+                    </div>
+                    <button class="history-view-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- history-section -->
+            <div class="history-section">
+                <div class="history-section-title"><span>أمس</span><i class="fa-regular fa-calendar"></i></div>
+                <div class="history-card" data-scan="3">
+                    <div class="history-card-icon excellent"><i class="fa-solid fa-check"></i></div>
+                    <div class="history-card-content">
+                        <h3>المزرعة B</h3>
+                        <span class="history-status excellent-text">حالة التربة: ممتازة</span>
+                        <p>درجة الحموضة 6.8 • جميع المعايير طبيعية</p>
+                        <small><i class="fa-regular fa-clock"></i> أمس، 04:15 مساءً</small>
+                    </div>
+                    <button class="history-view-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+            <button class="new-history-scan-btn" id="historyNewScan" type="button"><i class="fa-solid fa-plus"></i> فحص جديد للتربة</button>
+        </div>
+    </section>
+
+   <!-- JavaScript -->
+    <script src="js/app.js"></script>
+</body>
+</html>

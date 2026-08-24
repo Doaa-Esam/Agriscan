@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="ar">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta name="theme-color" content="#0B1F33" >
+    <title>AgriScan - لوحة التحكم</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.css" >
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" >
+</head>
+
+
+<body>
+    <section class="screen dashboard-screen">
+        <!-- Header -->
+        <header class="app-header">
+            <div>
+                <span class="welcome-small"> مرحباً بعودتك </span>
+                <h1> AgriScan
+                    <i class="fa-solid fa-seedling"></i>
+                </h1>
+            </div>
+
+            <!-- Notification -->
+            <button class="notification-btn" type="button" >
+                <i class="fa-regular fa-bell"></i>
+            </button>
+        </header>
+
+        <!-- Main -->
+        <main class="dashboard-content">
+
+            <!-- Soil Status -->
+            <div class="status-card">
+                <div>
+                    <span> حالة التربة </span>
+                    <h2> جيدة </h2>
+                    <p> آخر فحص: اليوم </p>
+                </div>
+
+                <div class="status-icon">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+
+            </div>
+
+            <!-- Measurements -->
+            <h2 class="section-title"> قياسات التربة </h2>
+
+            <div class="measurements-grid">
+
+                <!-- pH -->
+                <div class="measurement-card">
+                    <span>
+                        <i class="fa-solid fa-flask"></i> درجة الحموضة
+                    </span>
+                    <strong> 6.4 </strong>
+                    <small> طبيعي </small>
+                </div>
+
+                <!-- Moisture -->
+                <div class="measurement-card">
+                    <span> <i class="fa-solid fa-droplet"></i> الرطوبة</span>
+                    <strong> 42% </strong>
+                    <small> جيدة </small>
+                </div>
+
+                <!-- Nitrogen -->
+                <div class="measurement-card">
+                    <span>
+                        <i class="fa-solid fa-leaf"></i> النيتروجين
+                    </span>
+                    <strong> 18 </strong>
+                    <small> منخفض </small>
+                </div>
+
+                <!-- Temperature -->
+                <div class="measurement-card">
+                    <span>
+                        <i class="fa-solid fa-temperature-half"></i> درجة الحرارة </span>
+                    <strong> 25°C </strong>
+                    <small> طبيعي </small>
+                </div>
+            </div>
+
+            <!-- Start Scan -->
+            <button id="startScanBtn" class="scan-btn" type="button" >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                بدء فحص جديد للتربة
+            </button>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="active" type="button">
+                <i class="fa-solid fa-house"></i>
+                <span> الرئيسية </span>
+            </button>
+            <button type="button">
+                <i class="fa-solid fa-seedling"></i>
+                <span> المزارع </span>
+            </button>
+            <button id="scanNavBtn" type="button" >
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span> الفحص </span>
+            </button>
+            <button type="button">
+                <i class="fa-solid fa-chart-column"></i>
+                <span> السجل </span>
+            </button>
+            <button type="button">
+                <i class="fa-solid fa-gear"></i>
+                <span> الإعدادات </span>
+            </button>
+        </nav>
+    </section>
+
+    <!-- JavaScript -->
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

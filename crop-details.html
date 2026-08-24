@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B1F33">
+    <title>AgriScan - تفاصيل المحاصيل</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <section class="screen crop-details-screen">
+
+        <div class="crop-details-container">
+
+            <button class="back-btn" id="backToAnalysis" type="button"><i class="fa-solid fa-arrow-left"></i></button>
+
+            <div class="crop-header">
+                <div class="crop-header-icon"><i class="fa-solid fa-seedling"></i></div>
+                <h1>توصيات المحاصيل</h1>
+                <p>اختر المحاصيل المناسبة لحالة التربة الخاصة بك</p>
+            </div>
+
+            <div class="soil-summary">
+
+                <div class="summary-icon"><i class="fa-solid fa-flask"></i></div>
+
+                <div>
+                    <span>حالة التربة الخاصة بك</span>
+                    <strong>جيدة</strong>
+                    <p>درجة الحموضة 6.4 • الرطوبة 42% • انخفاض النيتروجين</p>
+                </div>
+
+            </div>
+
+            <div class="crop-section">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-label">توصيات الذكاء الاصطناعي</span>
+                        <h2>المحاصيل المناسبة</h2>
+                    </div>
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+
+                <div class="crop-grid">
+
+                    <div class="crop-card">
+
+                        <div class="crop-card-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+
+                        <div class="crop-card-content">
+                            <h3>القمح</h3>
+                            <span class="crop-match">توافق مرتفع</span>
+                            <p>مناسب لحالة التربة الحالية لديك.</p>
+                        </div>
+
+                        <button class="crop-details-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+
+                    </div>
+
+                    <div class="crop-card">
+
+                        <div class="crop-card-icon"><i class="fa-solid fa-seedling"></i></div>
+
+                        <div class="crop-card-content">
+                            <h3>الذرة</h3>
+                            <span class="crop-match">توافق مرتفع</span>
+                            <p>يمكن أن تنمو بشكل جيد مع توفير النيتروجين المناسب.</p>
+                        </div>
+
+                        <button class="crop-details-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+
+                    </div>
+
+                    <div class="crop-card">
+
+                        <div class="crop-card-icon"><i class="fa-solid fa-leaf"></i></div>
+
+                        <div class="crop-card-content">
+                            <h3>الطماطم</h3>
+                            <span class="crop-match">توافق جيد</span>
+                            <p>مناسبة مع المتابعة المنتظمة لمستوى الرطوبة.</p>
+                        </div>
+
+                        <button class="crop-details-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="crop-advice">
+
+                <div class="advice-icon"><i class="fa-solid fa-lightbulb"></i></div>
+
+                <div>
+                    <h2>قبل الزراعة</h2>
+                    <p>مستوى النيتروجين لديك منخفض. تحسين مستوى النيتروجين في التربة قد يساعد على دعم نمو المحاصيل بشكل أفضل.</p>
+                </div>
+
+            </div>
+
+            <button class="new-scan-btn" id="newScanBtn" type="button"><i class="fa-solid fa-magnifying-glass"></i> فحص تربة جديد</button>
+
+        </div>
+
+    </section>
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

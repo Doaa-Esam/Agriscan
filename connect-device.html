@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+
+    <meta name="theme-color" content="#0B1F33" >
+
+    <title>AgriScan - توصيل الجهاز</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/all.css" >
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css" >
+</head>
+
+
+<body>
+    <section class="screen connect-screen">
+        <div class="connect-container">
+
+            <!-- Back Button -->
+            <button class="back-btn" id="backToDashboard" type="button" >
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+
+            <!-- Device Icon -->
+            <div class="device-icon">
+                <i class="fa-solid fa-microchip"></i>
+            </div>
+
+            <!-- Title -->
+            <h1> توصيل جهازك </h1>
+            <p class="connect-subtitle"> تأكد من تشغيل جهاز AgriScan ووجوده بالقرب منك. </p>
+
+            <!-- Searching -->
+            <div class="searching-box" id="searchingBox" >
+                <div class="search-animation">
+                    <i class="fa-solid fa-bluetooth-b"></i>
+                </div>
+                <h2> جارٍ البحث عن الأجهزة... </h2>
+                <p> يرجى الانتظار أثناء البحث عن جهاز AgriScan الخاص بك. </p>
+                <div class="search-loader"></div>
+            </div>
+
+            <!-- Device Found -->
+
+            <div class="device-found hidden" id="deviceFound" >
+                <div class="found-header">
+                    <div class="found-icon">
+                        <i class="fa-solid fa-microchip"></i>
+                    </div>
+                    <div>
+                        <span> تم العثور على الجهاز </span>
+                        <h2> جهاز AgriScan </h2>
+                    </div>
+                </div>
+
+                <div class="device-info">
+                    <div>
+                        <span> معرّف الجهاز </span>
+                        <strong> AG-001 </strong>
+                    </div>
+
+                    <div>
+                        <span> الاتصال </span>
+                        <strong class="connected-text">
+                            <i class="fa-solid fa-circle"></i>
+                            متاح
+                        </strong>
+                    </div>
+                </div>
+
+                <button class="connect-btn" id="connectBtn" type="button" >
+                    <i class="fa-solid fa-link"></i>
+                    توصيل الجهاز
+                </button>
+            </div>
+
+            <!-- Connected -->
+            <div class="connected-box hidden" id="connectedBox" >
+                <div class="success-icon">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <h2> تم توصيل الجهاز </h2>
+                <p> جهاز AgriScan الخاص بك جاهز لفحص التربة. </p>
+                <button class="scan-now-btn" id="scanNowBtn" type="button" >
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    بدء فحص التربة
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- JavaScript -->
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

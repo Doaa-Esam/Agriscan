@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B1F33">
+    <title>AgriScan - المزارع</title>
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <section class="screen farms-screen">
+        <div class="farms-container">
+            <button class="back-btn" id="backToDashboardFromFarms" type="button"><i class="fa-solid fa-arrow-left"></i></button>
+
+            <div class="farms-header">
+                <div class="farms-header-icon"><i class="fa-solid fa-wheat-awn"></i></div>
+                <h1>مزارعي</h1>
+                <p>إدارة مزارعك وحقولك</p>
+            </div>
+
+            <div class="farms-summary">
+                <div class="farm-summary-card">
+                    <div class="farm-summary-icon"><i class="fa-solid fa-house"></i></div>
+                    <div><strong>2</strong><span>المزارع</span></div>
+                </div>
+                <div class="farm-summary-card">
+                    <div class="farm-summary-icon"><i class="fa-solid fa-ruler-combined"></i></div>
+                    <div><strong>13</strong><span>إجمالي الأفدنة</span></div>
+                </div>
+            </div>
+
+            <div class="farms-section">
+                <div class="farms-section-title">
+                    <div>
+                        <span>مواقعي</span>
+                        <h2>مزارعك</h2>
+                    </div>
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+
+                <div class="farm-card">
+                    <div class="farm-card-top">
+                        <div class="farm-icon"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="farm-title"><h3>المزرعة A</h3><span><i class="fa-solid fa-location-dot"></i> المنوفية</span></div>
+                        <button class="farm-menu-btn" type="button"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                    <div class="farm-details">
+                        <div><i class="fa-solid fa-ruler-combined"></i><span>5 أفدنة</span></div>
+                        <div><i class="fa-solid fa-leaf"></i><span>قمح</span></div>
+                        <div><i class="fa-solid fa-flask"></i><span>3 فحوصات</span></div>
+                    </div>
+                    <button class="farm-view-btn" type="button"><i class="fa-solid fa-chart-line"></i> عرض المزرعة</button>
+                </div>
+
+                <div class="farm-card">
+                    <div class="farm-card-top">
+                        <div class="farm-icon"><i class="fa-solid fa-seedling"></i></div>
+                        <div class="farm-title"><h3>المزرعة B</h3><span><i class="fa-solid fa-location-dot"></i> الجيزة</span></div>
+                        <button class="farm-menu-btn" type="button"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    </div>
+                    <div class="farm-details">
+                        <div><i class="fa-solid fa-ruler-combined"></i><span>8 أفدنة</span></div>
+                        <div><i class="fa-solid fa-leaf"></i><span>ذرة</span></div>
+                        <div><i class="fa-solid fa-flask"></i><span>5 فحوصات</span></div>
+                    </div>
+                    <button class="farm-view-btn" type="button"><i class="fa-solid fa-chart-line"></i> عرض المزرعة</button>
+                </div>
+            </div>
+
+            <button class="add-farm-btn" id="addFarmBtn" type="button"><i class="fa-solid fa-plus"></i> إضافة مزرعة جديدة</button>
+        </div>
+    </section>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
