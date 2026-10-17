@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#0B1F33"
+    >
+
+    <title>AgriScan - تفاصيل الجهاز</title>
+
+    <link
+        rel="stylesheet"
+        href="css/all.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <section class="screen settings-screen">
+
+        <div class="settings-container">
+
+            <button
+                class="back-btn"
+                id="backToSettings"
+                type="button"
+            >
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <div class="settings-header">
+
+                <div class="settings-header-icon">
+
+                    <i class="fa-solid fa-microchip"></i>
+
+                </div>
+
+
+                <h1>
+                    تفاصيل الجهاز
+                </h1>
+
+
+                <p>
+                    بيانات جهاز AgriScan المتصل
+                </p>
+
+            </div>
+
+
+            <!-- DEVICE INFORMATION -->
+
+            <div class="settings-section">
+
+                <h2>
+                    معلومات الجهاز
+                </h2>
+
+
+                <div class="settings-card">
+
+                    <div class="settings-icon">
+
+                        <i class="fa-solid fa-microchip"></i>
+
+                    </div>
+
+
+                    <div class="settings-info">
+
+                        <strong>
+                            اسم الجهاز
+                        </strong>
+
+                        <span id="deviceName">
+                            جاري تحميل البيانات...
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+                    <div class="settings-icon">
+
+                        <i class="fa-solid fa-barcode"></i>
+
+                    </div>
+
+
+                    <div class="settings-info">
+
+                        <strong>
+                            كود الجهاز
+                        </strong>
+
+                        <span id="deviceCode">
+                            جاري تحميل البيانات...
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-card">
+
+                    <div class="settings-icon">
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                    </div>
+
+
+                    <div class="settings-info">
+
+                        <strong>
+                            حالة الجهاز
+                        </strong>
+
+                        <span id="deviceStatus">
+                            جاري التحقق...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FARM INFORMATION -->
+
+            <div class="settings-section">
+
+                <h2>
+                    المزرعة المرتبطة
+                </h2>
+
+
+                <div class="settings-card">
+
+                    <div class="settings-icon">
+
+                        <i class="fa-solid fa-seedling"></i>
+
+                    </div>
+
+
+                    <div class="settings-info">
+
+                        <strong>
+                            المزرعة
+                        </strong>
+
+                        <span id="deviceFarm">
+                            جاري تحميل البيانات...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CONNECTION INFORMATION -->
+
+            <div class="settings-section">
+
+                <h2>
+                    معلومات الاتصال
+                </h2>
+
+
+                <div class="settings-card">
+
+                    <div class="settings-icon">
+
+                        <i class="fa-solid fa-clock"></i>
+
+                    </div>
+
+
+                    <div class="settings-info">
+
+                        <strong>
+                            آخر اتصال
+                        </strong>
+
+                        <span id="deviceConnectedAt">
+                            جاري تحميل البيانات...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <script src="js/device-details.js"></script>
+
+</body>
+
+</html>

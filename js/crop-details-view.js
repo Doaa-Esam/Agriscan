@@ -1,6 +1,5 @@
 
 // GET ELEMENTS
-
 const cropNameElement =
     document.getElementById("cropName");
 
@@ -20,44 +19,180 @@ const newScanBtn =
     document.getElementById("newScanBtn");
 
 
-// GET CROP ID FROM URL
-
+// GET URL PARAMETERS
 const urlParams =
-    new URLSearchParams(window.location.search);
+    new URLSearchParams(
+        window.location.search
+    );
+
 
 const cropId =
     urlParams.get("id");
 
-console.log("Crop ID:", cropId);
 
+const farmId =
+    urlParams.get("farmId");
+
+
+console.log(
+    "Crop ID:",
+    cropId
+);
+
+
+console.log(
+    "Farm ID:",
+    farmId
+);
+
+
+// API
+const cropDetailsAPI =
+    "http://localhost:3000/api";
+
+
+// AUTH TOKEN
+function getCropDetailsToken() {
+
+    return localStorage.getItem(
+        "agriscan_token"
+    );
+
+}
+
+
+// AUTH HEADERS
+function getCropDetailsHeaders() {
+
+    const token =
+        getCropDetailsToken();
+
+
+    const headers = {};
+
+
+    if (token) {
+
+        headers.Authorization =
+            `Bearer ${token}`;
+
+    }
+
+
+    return headers;
+
+}
+
+
+// HANDLE AUTH ERROR
+function handleCropDetailsAuthError() {
+
+    localStorage.removeItem(
+        "agriscan_token"
+    );
+
+
+    localStorage.removeItem(
+        "agriscan_user"
+    );
+
+
+    sessionStorage.removeItem(
+        "agriscan_device_code"
+    );
+
+
+    sessionStorage.removeItem(
+        "agriscan_device_id"
+    );
+
+
+    sessionStorage.removeItem(
+        "agriscan_farm_id"
+    );
+
+
+    sessionStorage.removeItem(
+        "agriscan_farm_name"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
 
 // LOAD CROP DETAILS
-
 async function loadCropDetails() {
 
     if (!cropId) {
 
-        console.error("Crop ID is missing");
+        console.error(
+            "Crop ID is missing"
+        );
+
 
         if (cropNameElement) {
+
             cropNameElement.textContent =
                 "لم يتم تحديد المحصول";
+
         }
+
 
         if (cropDescriptionElement) {
+
             cropDescriptionElement.textContent =
                 "لم يتم تحديد رقم المحصول.";
+
         }
 
+
         return;
+
+    }
+
+
+    const token =
+        getCropDetailsToken();
+
+
+    if (!token) {
+
+        window.location.href =
+            "login.html";
+
+        return;
+
     }
 
 
     try {
 
-        const response = await fetch(
-            `http://localhost:3000/api/crops/${cropId}/details`
-        );
+        // GET CROP DETAILS
+        const response =
+            await fetch(
+                `${cropDetailsAPI}/crops/${cropId}/details`,
+                {
+                    method: "GET",
+
+                    headers:
+                        getCropDetailsHeaders()
+                }
+            );
+
+
+        // AUTH ERROR
+        if (
+            response.status === 401 ||
+            response.status === 403
+        ) {
+
+            handleCropDetailsAuthError();
+
+            return;
+
+        }
 
 
         if (!response.ok) {
@@ -79,7 +214,6 @@ async function loadCropDetails() {
         );
 
         // CROP
-
         const crop =
             data.crop;
 
@@ -92,18 +226,17 @@ async function loadCropDetails() {
 
         }
 
-        // CROP NAME
 
+        // CROP NAME
         if (cropNameElement) {
 
             cropNameElement.textContent =
-                crop.name || "اسم غير متاح";
+                crop.name ||
+                "اسم غير متاح";
 
         }
 
-
         // CROP DESCRIPTION
-
         if (cropDescriptionElement) {
 
             cropDescriptionElement.textContent =
@@ -112,54 +245,64 @@ async function loadCropDetails() {
 
         }
 
-
         // CROP IMAGES
-
         if (cropImagesContainer) {
 
             cropImagesContainer.innerHTML = "";
 
 
             if (
-                data.images &&
+                Array.isArray(data.images) &&
                 data.images.length > 0
             ) {
 
-                data.images.forEach(function(image) {
+                data.images.forEach(
+                    function(image) {
 
-                    const img =
-                        document.createElement("img");
-
-
-                    img.src =
-                        "http://localhost:3000" +
-                        image.image_path;
+                        const img =
+                            document.createElement(
+                                "img"
+                            );
 
 
-                    img.alt =
-                        crop.name || "صورة المحصول";
+                        img.src =
+                            `${cropDetailsAPI.replace(
+                                "/api",
+                                ""
+                            )}${image.image_path}`;
 
 
-                    img.style.width =
-                        "150px";
-
-                    img.style.height =
-                        "150px";
-
-                    img.style.objectFit =
-                        "cover";
-
-                    img.style.borderRadius =
-                        "15px";
+                        img.alt =
+                            crop.name ||
+                            "صورة المحصول";
 
 
-                    cropImagesContainer.appendChild(
-                        img
-                    );
+                        img.style.width =
+                            "150px";
 
-                });
 
-            } else {
+                        img.style.height =
+                            "150px";
+
+
+                        img.style.objectFit =
+                            "cover";
+
+
+                        img.style.borderRadius =
+                            "15px";
+
+
+                        cropImagesContainer.appendChild(
+                            img
+                        );
+
+                    }
+                );
+
+            }
+
+            else {
 
                 cropImagesContainer.innerHTML = `
                     <p>
@@ -171,16 +314,14 @@ async function loadCropDetails() {
 
         }
 
-
         // DISEASES
-
         if (diseasesContainer) {
 
             diseasesContainer.innerHTML = "";
 
 
             if (
-                data.diseases &&
+                Array.isArray(data.diseases) &&
                 data.diseases.length > 0
             ) {
 
@@ -188,14 +329,14 @@ async function loadCropDetails() {
                     function(disease) {
 
                         const diseaseCard =
-                            document.createElement("div");
+                            document.createElement(
+                                "div"
+                            );
 
 
                         diseaseCard.className =
                             "issue-card";
 
-
-                        // DISEASE HTML
 
                         diseaseCard.innerHTML = `
 
@@ -209,7 +350,10 @@ async function loadCropDetails() {
                             <div class="issue-content">
 
                                 <h3>
-                                    ${disease.name || "مرض غير معروف"}
+                                    ${
+                                        disease.name ||
+                                        "مرض غير معروف"
+                                    }
                                 </h3>
 
 
@@ -224,24 +368,30 @@ async function loadCropDetails() {
                                 <div class="disease-treatments">
 
                                     ${
-                                        disease.treatments &&
+                                        Array.isArray(
+                                            disease.treatments
+                                        ) &&
                                         disease.treatments.length > 0
 
-                                        ?
+                                            ?
 
                                         disease.treatments.map(
                                             function(treatment) {
 
                                                 return `
                                                     <span class="issue-value">
-                                                        العلاج: ${treatment.treatment}
+                                                        العلاج:
+                                                        ${
+                                                            treatment.treatment ||
+                                                            "غير متاح"
+                                                        }
                                                     </span>
                                                 `;
 
                                             }
                                         ).join("")
 
-                                        :
+                                            :
 
                                         `
                                             <span class="issue-value">
@@ -262,14 +412,17 @@ async function loadCropDetails() {
                         );
 
                         // DISEASE IMAGES
-
                         if (
-                            disease.images &&
+                            Array.isArray(
+                                disease.images
+                            ) &&
                             disease.images.length > 0
                         ) {
 
                             const imagesContainer =
-                                document.createElement("div");
+                                document.createElement(
+                                    "div"
+                                );
 
 
                             imagesContainer.style.display =
@@ -292,12 +445,16 @@ async function loadCropDetails() {
                                 function(image) {
 
                                     const img =
-                                        document.createElement("img");
+                                        document.createElement(
+                                            "img"
+                                        );
 
 
                                     img.src =
-                                        "http://localhost:3000" +
-                                        image.image_path;
+                                        `${cropDetailsAPI.replace(
+                                            "/api",
+                                            ""
+                                        )}${image.image_path}`;
 
 
                                     img.alt =
@@ -338,7 +495,9 @@ async function loadCropDetails() {
                     }
                 );
 
-            } else {
+            }
+
+            else {
 
                 diseasesContainer.innerHTML = `
                     <p>
@@ -350,8 +509,9 @@ async function loadCropDetails() {
 
         }
 
+    }
 
-    } catch (error) {
+    catch (error) {
 
         console.error(
             "خطأ في تحميل تفاصيل المحصول:",
@@ -400,17 +560,26 @@ async function loadCropDetails() {
 
 }
 
-
-// BACK TO CROPS
-
+// BACK TO CROP PAGE
 if (backToCrops) {
 
     backToCrops.addEventListener(
         "click",
         function() {
 
-            window.location.href =
-                "crop-details.html";
+            if (farmId) {
+
+                window.location.href =
+                    `crop-details.html?farmId=${farmId}`;
+
+            }
+
+            else {
+
+                window.location.href =
+                    "crop-details.html";
+
+            }
 
         }
     );
@@ -418,15 +587,25 @@ if (backToCrops) {
 }
 
 // NEW SOIL SCAN
-
 if (newScanBtn) {
 
     newScanBtn.addEventListener(
         "click",
         function() {
 
-            window.location.href =
-                "connect-device.html";
+            if (farmId) {
+
+                window.location.href =
+                    `connect-device.html?farmId=${farmId}`;
+
+            }
+
+            else {
+
+                window.location.href =
+                    "farms.html?action=scan";
+
+            }
 
         }
     );
@@ -434,5 +613,4 @@ if (newScanBtn) {
 }
 
 // START
-
 loadCropDetails();

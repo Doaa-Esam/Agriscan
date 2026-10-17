@@ -36,47 +36,18 @@
                 </div>
             </div>
 
-            <!-- history-section -->
-            <div class="history-section">
-                <div class="history-section-title"><span>اليوم</span><i class="fa-regular fa-calendar"></i></div>
-                <div class="history-card" data-scan="1">
-                    <div class="history-card-icon good"><i class="fa-solid fa-seedling"></i></div>
-                    <div class="history-card-content">
-                        <h3>الحقل 1</h3>
-                        <span class="history-status good-text">حالة التربة: جيدة</span>
-                        <p>درجة الحموضة 6.4 • النيتروجين منخفض</p>
-                        <small><i class="fa-regular fa-clock"></i> اليوم، 08:30 مساءً</small>
-                    </div>
-                    <button class="history-view-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+            <!-- HISTORY CONTENT -->
+
+            <div id="historyContent">
+                <div class="history-empty-state">
+                   <i class="fa-solid fa-spinner fa-spin"></i>
+
+                   <p> جاري تحميل سجل الفحوصات... </p>
+
                 </div>
 
-                <!-- history-card -->
-                <div class="history-card" data-scan="2">
-                    <div class="history-card-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
-                    <div class="history-card-content">
-                        <h3>المزرعة A</h3>
-                        <span class="history-status warning-text">تحتاج إلى اهتمام</span>
-                        <p>درجة الحموضة 5.8 • الرطوبة منخفضة</p>
-                        <small><i class="fa-regular fa-clock"></i> اليوم، 03:15 مساءً</small>
-                    </div>
-                    <button class="history-view-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
             </div>
 
-            <!-- history-section -->
-            <div class="history-section">
-                <div class="history-section-title"><span>أمس</span><i class="fa-regular fa-calendar"></i></div>
-                <div class="history-card" data-scan="3">
-                    <div class="history-card-icon excellent"><i class="fa-solid fa-check"></i></div>
-                    <div class="history-card-content">
-                        <h3>المزرعة B</h3>
-                        <span class="history-status excellent-text">حالة التربة: ممتازة</span>
-                        <p>درجة الحموضة 6.8 • جميع المعايير طبيعية</p>
-                        <small><i class="fa-regular fa-clock"></i> أمس، 04:15 مساءً</small>
-                    </div>
-                    <button class="history-view-btn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
-                </div>
-            </div>
             <button class="new-history-scan-btn" id="historyNewScan" type="button"><i class="fa-solid fa-plus"></i> فحص جديد للتربة</button>
         </div>
     </section>

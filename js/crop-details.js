@@ -1,7 +1,12 @@
 
-// ELEMENTS
+// API
+const CROP_DETAILS_API =
+    "http://localhost:3000/api";
 
-const cropGrid = document.getElementById("cropGrid");
+
+// GET ELEMENTS
+const cropGrid =
+    document.getElementById("cropGrid");
 
 const backToAnalysisBtn =
     document.getElementById("backToAnalysis");
@@ -9,32 +14,300 @@ const backToAnalysisBtn =
 const newScanButton =
     document.getElementById("newScanBtn");
 
+const soilStatus =
+    document.getElementById("soilStatus");
+
+const soilSummaryText =
+    document.getElementById("soilSummaryText");
+
+const cropAdviceText =
+    document.getElementById("cropAdviceText");
+
+
+// GET URL PARAMETERS
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+
+const farmId =
+    urlParams.get("farmId");
+
+
+const scanId =
+    urlParams.get("scanId");
+
+
+console.log(
+    "Farm ID:",
+    farmId
+);
+
+
+console.log(
+    "Scan ID:",
+    scanId
+);
+
+
+// AUTH TOKEN
+function getCropDetailsToken() {
+
+    const token =
+        localStorage.getItem(
+            "agriscan_token"
+        );
+
+
+    if (!token) {
+
+        window.location.href =
+            "login.html";
+
+        return null;
+
+    }
+
+
+    return token;
+
+}
+
+
+// AUTH HEADERS
+function getAuthHeaders() {
+
+    const token =
+        getCropDetailsToken();
+
+
+    if (!token) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        "Authorization":
+            `Bearer ${token}`
+
+    };
+
+}
+
+
+// HANDLE AUTH ERROR
+function handleCropDetailsAuthError(
+    response
+) {
+
+    if (
+        response.status === 401 ||
+        response.status === 403
+    ) {
+
+        localStorage.removeItem(
+            "agriscan_token"
+        );
+
+
+        localStorage.removeItem(
+            "agriscan_user"
+        );
+
+
+        sessionStorage.removeItem(
+            "agriscan_device_code"
+        );
+
+
+        sessionStorage.removeItem(
+            "agriscan_device_id"
+        );
+
+
+        sessionStorage.removeItem(
+            "agriscan_farm_id"
+        );
+
+
+        sessionStorage.removeItem(
+            "agriscan_farm_name"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
 
 // LOAD CROPS
-
 async function loadCrops() {
 
     if (!cropGrid) {
+
         return;
+
     }
+
+
+    const headers =
+        getAuthHeaders();
+
+
+    if (!headers) {
+
+        return;
+
+    }
+
 
     try {
 
-        const response = await fetch(
-            "http://localhost:3000/api/crops"
-        );
+        let crops = [];
 
-        if (!response.ok) {
-            throw new Error("فشل تحميل المحاصيل");
+        // FARM ID EXISTS
+        // LOAD FARM CROP
+        if (farmId) {
+
+            const farmResponse =
+                await fetch(
+                    `${CROP_DETAILS_API}/farms/${farmId}`,
+                    {
+                        method: "GET",
+                        headers: headers
+                    }
+                );
+
+
+            if (
+                handleCropDetailsAuthError(
+                    farmResponse
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            if (!farmResponse.ok) {
+
+                throw new Error(
+                    "فشل تحميل بيانات المزرعة"
+                );
+
+            }
+
+
+            const farm =
+                await farmResponse.json();
+
+
+            console.log(
+                "المزرعة المحددة:",
+                farm
+            );
+
+
+            if (!farm.crop_id) {
+
+                cropGrid.innerHTML = `
+                    <p>
+                        لم يتم تحديد محصول لهذه المزرعة.
+                    </p>
+                `;
+
+                return;
+
+            }
+
+
+            // LOAD CROP DETAILS
+            const cropResponse =
+                await fetch(
+                    `${CROP_DETAILS_API}/crops/${farm.crop_id}`,
+                    {
+                        method: "GET"
+                    }
+                );
+
+
+            if (!cropResponse.ok) {
+
+                throw new Error(
+                    "فشل تحميل بيانات المحصول"
+                );
+
+            }
+
+
+            const crop =
+                await cropResponse.json();
+
+
+            console.log(
+                "المحصول المحدد:",
+                crop
+            );
+
+
+            crops = [crop];
+
         }
 
-        const crops = await response.json();
+        // NO FARM ID
+        // LOAD ALL CROPS
+        else {
 
-        console.log("CROPS:", crops);
+            const response =
+                await fetch(
+                    `${CROP_DETAILS_API}/crops`,
+                    {
+                        method: "GET"
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "فشل تحميل المحاصيل"
+                );
+
+            }
+
+
+            crops =
+                await response.json();
+
+        }
+
+
+        console.log(
+            "المحاصيل:",
+            crops
+        );
+
 
         cropGrid.innerHTML = "";
 
-        if (!Array.isArray(crops) || crops.length === 0) {
+
+        if (
+            !Array.isArray(crops) ||
+            crops.length === 0
+        ) {
 
             cropGrid.innerHTML = `
                 <p>
@@ -43,88 +316,118 @@ async function loadCrops() {
             `;
 
             return;
+
         }
 
-
         // CREATE CROP CARDS
+        crops.forEach(
+            function(crop) {
 
-        crops.forEach(function(crop) {
+                const card =
+                    document.createElement(
+                        "div"
+                    );
 
-            const card =
-                document.createElement("div");
 
-            card.className = "crop-card";
+                card.className =
+                    "crop-card";
 
-            card.innerHTML = `
 
-                <div class="crop-card-icon">
-                    <i class="fa-solid fa-seedling"></i>
-                </div>
+                card.innerHTML = `
 
-                <div class="crop-card-content">
+                    <div class="crop-card-icon">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
 
-                    <h3>
-                        ${crop.name || "محصول"}
-                    </h3>
+                    <div class="crop-card-content">
 
-                    <span class="crop-match">
-                        محصول مسجل
-                    </span>
+                        <h3>
+                            ${crop.name || "محصول"}
+                        </h3>
 
-                    <p>
-                        ${
-                            crop.description ||
-                            "لا توجد تفاصيل متاحة حاليًا."
-                        }
-                    </p>
+                        <span class="crop-match">
+                            ${
+                                farmId
+                                    ? "محصول المزرعة"
+                                    : "محصول مسجل"
+                            }
+                        </span>
 
-                </div>
+                        <p>
+                            ${
+                                crop.description ||
+                                "لا توجد تفاصيل متاحة حاليًا."
+                            }
+                        </p>
 
-                <button
-                    class="crop-details-btn"
-                    type="button"
-                    data-id="${crop.id}">
+                    </div>
 
-                    <i class="fa-solid fa-chevron-left"></i>
+                    <button
+                        class="crop-details-btn"
+                        type="button"
+                        data-id="${crop.id}">
 
-                </button>
-            `;
+                        <i class="fa-solid fa-chevron-left"></i>
 
-            cropGrid.appendChild(card);
+                    </button>
+                `;
 
-        });
 
+                cropGrid.appendChild(
+                    card
+                );
+
+            }
+        );
 
         // DETAILS BUTTONS
-
         const buttons =
             cropGrid.querySelectorAll(
                 ".crop-details-btn"
             );
 
-        buttons.forEach(function(button) {
 
-            button.addEventListener(
-                "click",
-                function() {
+        buttons.forEach(
+            function(button) {
 
-                    const cropId =
-                        this.dataset.id;
+                button.addEventListener(
+                    "click",
+                    function() {
 
-                    if (!cropId) {
-                        console.error(
-                            "رقم المحصول غير موجود"
-                        );
-                        return;
+                        const selectedCropId =
+                            this.dataset.id;
+
+
+                        if (!selectedCropId) {
+
+                            console.error(
+                                "رقم المحصول غير موجود"
+                            );
+
+                            return;
+
+                        }
+
+
+                        if (farmId) {
+
+                            window.location.href =
+                                `crop-details-view.html?id=${selectedCropId}&farmId=${farmId}`;
+
+                        }
+
+                        else {
+
+                            window.location.href =
+                                `crop-details-view.html?id=${selectedCropId}`;
+
+                        }
+
                     }
+                );
 
-                    window.location.href =
-                        `crop-details-view.html?id=${cropId}`;
-
-                }
-            );
-
-        });
+            }
+        );
 
     }
 
@@ -134,6 +437,7 @@ async function loadCrops() {
             "خطأ في تحميل المحاصيل:",
             error
         );
+
 
         cropGrid.innerHTML = `
             <p>
@@ -147,106 +451,240 @@ async function loadCrops() {
 
 
 // LOAD SOIL SUMMARY
-
 async function loadSoilSummary() {
 
-    const soilStatus =
-        document.getElementById("soilStatus");
+    const headers =
+        getAuthHeaders();
 
-    const soilSummaryText =
-        document.getElementById("soilSummaryText");
+
+    if (!headers) {
+
+        return;
+
+    }
+
 
     try {
 
-        const response = await fetch(
-            "http://localhost:3000/api/scans"
-        );
+        let url =
+            `${CROP_DETAILS_API}/scans`;
+
+        // LOAD SCANS FOR SELECTED FARM
+        if (farmId) {
+
+            url +=
+                `?farm_id=${farmId}`;
+
+        }
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: headers
+                }
+            );
+
+
+        if (
+            handleCropDetailsAuthError(
+                response
+            )
+        ) {
+
+            return;
+
+        }
+
 
         if (!response.ok) {
+
             throw new Error(
                 "فشل تحميل بيانات التربة"
             );
+
         }
 
-        const scans = await response.json();
 
-        console.log("LATEST SCANS:", scans);
+        const scans =
+            await response.json();
 
 
-        // NO DATA
+        console.log(
+            "فحوصات المزرعة:",
+            scans
+        );
 
-        if (!Array.isArray(scans) || scans.length === 0) {
+
+        if (
+            !Array.isArray(scans) ||
+            scans.length === 0
+        ) {
 
             if (soilStatus) {
+
                 soilStatus.textContent =
                     "لا توجد بيانات";
+
             }
+
 
             if (soilSummaryText) {
+
                 soilSummaryText.textContent =
                     "لم يتم إجراء فحص للتربة بعد.";
+
             }
 
+
             return;
+
+        }
+
+        // GET LATEST SCAN
+        const latestScan =
+            scans.reduce(
+                function(latest, scan) {
+
+                    if (
+                        !latest ||
+                        Number(scan.id) >
+                        Number(latest.id)
+                    ) {
+
+                        return scan;
+
+                    }
+
+
+                    return latest;
+
+                },
+                null
+            );
+
+
+        console.log(
+            "آخر فحص:",
+            latestScan
+        );
+
+
+        if (!latestScan) {
+
+            return;
+
+        }
+
+        // LOAD REAL EVALUATION
+        let evaluation =
+            null;
+
+
+        const evaluationResponse =
+            await fetch(
+                `${CROP_DETAILS_API}/scans/${latestScan.id}/evaluation`,
+                {
+                    method: "GET",
+                    headers: headers
+                }
+            );
+
+
+        if (
+            handleCropDetailsAuthError(
+                evaluationResponse
+            )
+        ) {
+
+            return;
+
         }
 
 
-        // LATEST SCAN
+        if (evaluationResponse.ok) {
 
-        const scan = scans[0];
+            evaluation =
+                await evaluationResponse.json();
+
+
+            console.log(
+                "تقييم التربة:",
+                evaluation
+            );
+
+        }
 
 
         // SOIL STATUS
-
         if (soilStatus) {
 
-            switch (scan.status) {
+            if (
+                evaluation &&
+                Array.isArray(
+                    evaluation.parameters
+                )
+            ) {
 
-                case "NORMAL":
+                const evaluatedParameters =
+                    evaluation.parameters.filter(
+                        function(parameter) {
+
+                            return (
+                                parameter.status !==
+                                "UNKNOWN"
+                            );
+
+                        }
+                    );
+
+
+                if (
+                    evaluatedParameters.length > 0
+                ) {
 
                     soilStatus.textContent =
-                        "جيدة";
+                        "توجد قياسات قابلة للتقييم";
 
-                    break;
+                }
 
-                case "DRY":
-
-                    soilStatus.textContent =
-                        "تحتاج إلى متابعة";
-
-                    break;
-
-                case "VERY_WET":
+                else {
 
                     soilStatus.textContent =
-                        "رطبة جدًا";
+                        "في انتظار معايير التقييم";
 
-                    break;
+                }
 
-                default:
+            }
 
-                    soilStatus.textContent =
-                        "غير محددة";
+            else {
+
+                soilStatus.textContent =
+                    "في انتظار التقييم";
+
             }
 
         }
 
 
         // SOIL SUMMARY
-
         if (soilSummaryText) {
 
             const moisture =
-                scan.moisture !== null &&
-                scan.moisture !== undefined
-                    ? `${scan.moisture}%`
+                latestScan.moisture !== null &&
+                latestScan.moisture !== undefined
+                    ? `${latestScan.moisture}%`
                     : "غير متاحة";
 
+
             const temperature =
-                scan.temperature !== null &&
-                scan.temperature !== undefined
-                    ? `${scan.temperature}°C`
+                latestScan.temperature !== null &&
+                latestScan.temperature !== undefined
+                    ? `${latestScan.temperature}°C`
                     : "غير متاحة";
+
 
             soilSummaryText.textContent =
                 `الرطوبة ${moisture} • درجة الحرارة ${temperature}`;
@@ -262,15 +700,274 @@ async function loadSoilSummary() {
             error
         );
 
+
         if (soilStatus) {
+
             soilStatus.textContent =
                 "تعذر التحميل";
+
         }
 
+
         if (soilSummaryText) {
+
             soilSummaryText.textContent =
                 "تعذر تحميل بيانات فحص التربة.";
+
         }
+
+    }
+
+}
+
+// LOAD CROP ADVICE
+async function loadCropAdvice() {
+
+    if (!cropAdviceText) {
+
+        return;
+
+    }
+
+
+    const headers =
+        getAuthHeaders();
+
+
+    if (!headers) {
+
+        return;
+
+    }
+
+
+    try {
+
+        let url =
+            `${CROP_DETAILS_API}/scans`;
+
+
+        if (farmId) {
+
+            url +=
+                `?farm_id=${farmId}`;
+
+        }
+
+
+        const response =
+            await fetch(
+                url,
+                {
+                    method: "GET",
+                    headers: headers
+                }
+            );
+
+
+        if (
+            handleCropDetailsAuthError(
+                response
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "فشل تحميل بيانات التربة"
+            );
+
+        }
+
+
+        const scans =
+            await response.json();
+
+
+        if (
+            !Array.isArray(scans) ||
+            scans.length === 0
+        ) {
+
+            cropAdviceText.textContent =
+                "قم بإجراء فحص للتربة أولًا لعرض نتائج مرتبطة بالمحصول.";
+
+            return;
+
+        }
+
+
+        const latestScan =
+            scans.reduce(
+                function(latest, scan) {
+
+                    if (
+                        !latest ||
+                        Number(scan.id) >
+                        Number(latest.id)
+                    ) {
+
+                        return scan;
+
+                    }
+
+
+                    return latest;
+
+                },
+                null
+            );
+
+
+        if (!latestScan) {
+
+            cropAdviceText.textContent =
+                "لا توجد نتيجة فحص متاحة حاليًا.";
+
+            return;
+
+        }
+
+
+        // GET EVALUATION
+        const evaluationResponse =
+            await fetch(
+                `${CROP_DETAILS_API}/scans/${latestScan.id}/evaluation`,
+                {
+                    method: "GET",
+                    headers: headers
+                }
+            );
+
+
+        if (
+            handleCropDetailsAuthError(
+                evaluationResponse
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        if (!evaluationResponse.ok) {
+
+            cropAdviceText.textContent =
+                "لا توجد توصيات موثقة متاحة حاليًا.";
+
+            return;
+
+        }
+
+
+        const evaluation =
+            await evaluationResponse.json();
+
+
+        console.log(
+            "تقييم المحصول:",
+            evaluation
+        );
+
+        // GET DOCUMENTED EVALUATIONS
+        const evaluatedParameters =
+            Array.isArray(
+                evaluation.parameters
+            )
+                ? evaluation.parameters.filter(
+                    function(parameter) {
+
+                        return (
+                            parameter.status !==
+                            "UNKNOWN"
+                        );
+
+                    }
+                )
+                : [];
+
+
+        if (
+            evaluatedParameters.length === 0
+        ) {
+
+            cropAdviceText.textContent =
+                "لا توجد معايير موثقة كافية لتقديم توصية للمحصول حاليًا.";
+
+            return;
+
+        }
+
+
+        // BUILD FACTUAL SUMMARY
+        const summaryParts =
+            evaluatedParameters.map(
+                function(parameter) {
+
+                    let statusText =
+                        "تم تقييم القياس";
+
+
+                    if (
+                        parameter.status ===
+                        "OPTIMAL"
+                    ) {
+
+                        statusText =
+                            "داخل النطاق المناسب";
+
+                    }
+
+                    else if (
+                        parameter.status ===
+                        "BELOW_RANGE"
+                    ) {
+
+                        statusText =
+                            "أقل من النطاق المناسب";
+
+                    }
+
+                    else if (
+                        parameter.status ===
+                        "ABOVE_RANGE"
+                    ) {
+
+                        statusText =
+                            "أعلى من النطاق المناسب";
+
+                    }
+
+
+                    return (
+                        `${parameter.name}: ${statusText}`
+                    );
+
+                }
+            );
+
+
+        cropAdviceText.textContent =
+            summaryParts.join(" • ");
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "خطأ في تحميل نتائج المحصول:",
+            error
+        );
+
+
+        cropAdviceText.textContent =
+            "تعذر تحميل نتائج التقييم حاليًا.";
 
     }
 
@@ -278,15 +975,32 @@ async function loadSoilSummary() {
 
 
 // BACK TO ANALYSIS
-
 if (backToAnalysisBtn) {
 
     backToAnalysisBtn.addEventListener(
         "click",
         function() {
 
-            window.location.href =
-                "analysis.html";
+            if (farmId && scanId) {
+
+                window.location.href =
+                    `analysis.html?farmId=${farmId}&scanId=${scanId}`;
+
+            }
+
+            else if (farmId) {
+
+                window.location.href =
+                    `analysis.html?farmId=${farmId}`;
+
+            }
+
+            else {
+
+                window.location.href =
+                    "analysis.html";
+
+            }
 
         }
     );
@@ -295,101 +1009,35 @@ if (backToAnalysisBtn) {
 
 
 // NEW SOIL SCAN
-
 if (newScanButton) {
 
     newScanButton.addEventListener(
         "click",
         function() {
 
-            window.location.href =
-                "connect-device.html";
+            if (farmId) {
+
+                window.location.href =
+                    `connect-device.html?farmId=${farmId}`;
+
+            }
+
+            else {
+
+                window.location.href =
+                    "farms.html?action=scan";
+
+            }
 
         }
     );
 
 }
 
-// LOAD CROP ADVICE
-
-function loadCropAdvice() {
-
-    const cropAdviceText =
-        document.getElementById("cropAdviceText");
-
-    if (!cropAdviceText) {
-        return;
-    }
-
-    fetch("http://localhost:3000/api/scans")
-        .then(function(response) {
-
-            if (!response.ok) {
-                throw new Error("فشل تحميل بيانات التربة");
-            }
-
-            return response.json();
-
-        })
-        .then(function(scans) {
-
-            if (!scans || scans.length === 0) {
-
-                cropAdviceText.textContent =
-                    "قم بإجراء فحص للتربة أولًا للحصول على توصيات مناسبة.";
-
-                return;
-            }
-
-            const scan = scans[0];
-
-            // التوصية حسب حالة التربة
-
-            if (scan.status === "DRY") {
-
-                cropAdviceText.textContent =
-                    "التربة جافة، لذلك يُفضل الاهتمام بمستوى الرطوبة قبل اختيار المحصول المناسب.";
-
-            }
-
-            else if (scan.status === "VERY_WET") {
-
-                cropAdviceText.textContent =
-                    "مستوى رطوبة التربة مرتفع، لذلك يُفضل تحسين تصريف المياه قبل الزراعة.";
-
-            }
-
-            else if (scan.status === "NORMAL") {
-
-                cropAdviceText.textContent =
-                    "حالة التربة جيدة بشكل عام، ويمكن اختيار المحاصيل المناسبة بناءً على خصائص التربة واحتياجات كل محصول.";
-
-            }
-
-            else {
-
-                cropAdviceText.textContent =
-                    "تم تحليل التربة. راجع بيانات الفحص لاختيار المحاصيل المناسبة.";
-
-            }
-
-        })
-        .catch(function(error) {
-
-            console.error(
-                "خطأ في تحميل توصيات المحاصيل:",
-                error
-            );
-
-            cropAdviceText.textContent =
-                "تعذر تحميل التوصيات حاليًا.";
-
-        });
-
-}
 
 // START
-
 loadCrops();
+
 loadSoilSummary();
+
 loadCropAdvice();

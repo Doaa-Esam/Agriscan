@@ -10,119 +10,299 @@
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="css/all.css" >
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css" >
 </head>
 
 
 <body>
+
     <section class="screen dashboard-screen">
+
         <!-- Header -->
+
         <header class="app-header">
+
             <div>
-                <span class="welcome-small"> مرحباً بعودتك </span>
-                <h1> AgriScan
+
+                <span class="welcome-small">
+                    مرحباً بعودتك
+                </span>
+
+                <h1>
+                    AgriScan
                     <i class="fa-solid fa-seedling"></i>
                 </h1>
+
             </div>
+
 
             <!-- Notification -->
-            <button class="notification-btn" type="button" >
+
+            <button
+                class="notification-btn"
+                type="button">
+
                 <i class="fa-regular fa-bell"></i>
+
             </button>
+
         </header>
 
+
         <!-- Main -->
+
         <main class="dashboard-content">
 
+
             <!-- Soil Status -->
+
             <div class="status-card">
+
                 <div>
-                    <span> حالة التربة </span>
-                    <h2> جيدة </h2>
-                    <p> آخر فحص: اليوم </p>
+
+                    <span>
+                        حالة التقييم
+                    </span>
+
+                    <h2 id="dashboardSoilStatus">
+                        لا توجد نتيجة
+                    </h2>
+
+                    <p id="dashboardLastScan">
+                        لم يتم إجراء فحص بعد
+                    </p>
+
                 </div>
 
+
                 <div class="status-icon">
-                    <i class="fa-solid fa-check"></i>
+
+                    <i
+                        id="dashboardStatusIcon"
+                        class="fa-solid fa-circle-info">
+                    </i>
+
                 </div>
 
             </div>
 
+
             <!-- Measurements -->
-            <h2 class="section-title"> قياسات التربة </h2>
+
+            <h2 class="section-title">
+                قياسات التربة
+            </h2>
+
 
             <div class="measurements-grid">
 
+
                 <!-- pH -->
+
                 <div class="measurement-card">
+
                     <span>
-                        <i class="fa-solid fa-flask"></i> درجة الحموضة
+
+                        <i class="fa-solid fa-flask"></i>
+
+                        درجة الحموضة
+
                     </span>
-                    <strong> 6.4 </strong>
-                    <small> طبيعي </small>
+
+
+                    <strong id="dashboardPh">
+                        غير متاح
+                    </strong>
+
+
+                    <small id="dashboardPhStatus">
+                        لا توجد قراءة
+                    </small>
+
                 </div>
+
 
                 <!-- Moisture -->
+
                 <div class="measurement-card">
-                    <span> <i class="fa-solid fa-droplet"></i> الرطوبة</span>
-                    <strong> 42% </strong>
-                    <small> جيدة </small>
+
+                    <span>
+
+                        <i class="fa-solid fa-droplet"></i>
+
+                        الرطوبة
+
+                    </span>
+
+
+                    <strong id="dashboardMoisture">
+                        غير متاح
+                    </strong>
+
+
+                    <small id="dashboardMoistureStatus">
+                        لا توجد قراءة
+                    </small>
+
                 </div>
+
 
                 <!-- Nitrogen -->
+
                 <div class="measurement-card">
+
                     <span>
-                        <i class="fa-solid fa-leaf"></i> النيتروجين
+
+                        <i class="fa-solid fa-leaf"></i>
+
+                        النيتروجين
+
                     </span>
-                    <strong> 18 </strong>
-                    <small> منخفض </small>
+
+
+                    <strong id="dashboardNitrogen">
+                        غير متاح
+                    </strong>
+
+
+                    <small id="dashboardNitrogenStatus">
+                        لا توجد قراءة
+                    </small>
+
                 </div>
+
 
                 <!-- Temperature -->
+
                 <div class="measurement-card">
+
                     <span>
-                        <i class="fa-solid fa-temperature-half"></i> درجة الحرارة </span>
-                    <strong> 25°C </strong>
-                    <small> طبيعي </small>
+
+                        <i class="fa-solid fa-temperature-half"></i>
+
+                        درجة الحرارة
+
+                    </span>
+
+
+                    <strong id="dashboardTemperature">
+                        غير متاح
+                    </strong>
+
+
+                    <small id="dashboardTemperatureStatus">
+                        لا توجد قراءة
+                    </small>
+
                 </div>
+
+
             </div>
 
+
             <!-- Start Scan -->
-            <button id="startScanBtn" class="scan-btn" type="button" >
+
+            <button
+                id="startScanBtn"
+                class="scan-btn"
+                type="button">
+
                 <i class="fa-solid fa-magnifying-glass"></i>
+
                 بدء فحص جديد للتربة
+
             </button>
+
+
         </main>
 
+
         <!-- Bottom Navigation -->
+
         <nav class="bottom-nav">
-            <button class="active" type="button">
+
+
+            <!-- Home -->
+
+            <button
+                class="active"
+                type="button">
+
                 <i class="fa-solid fa-house"></i>
-                <span> الرئيسية </span>
+
+                <span>
+                    الرئيسية
+                </span>
+
             </button>
-            <button type="button">
+
+
+            <!-- Farms -->
+
+            <button
+                type="button">
+
                 <i class="fa-solid fa-seedling"></i>
-                <span> المزارع </span>
+
+                <span>
+                    المزارع
+                </span>
+
             </button>
-            <button id="scanNavBtn" type="button" >
+
+
+            <!-- Scan -->
+
+            <button
+                id="scanNavBtn"
+                type="button">
+
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <span> الفحص </span>
+
+                <span>
+                    الفحص
+                </span>
+
             </button>
-            <button type="button">
+
+
+            <!-- History -->
+
+            <button
+                type="button">
+
                 <i class="fa-solid fa-chart-column"></i>
-                <span> السجل </span>
+
+                <span>
+                    السجل
+                </span>
+
             </button>
-            <button type="button">
+
+
+            <!-- Settings -->
+
+            <button
+                type="button">
+
                 <i class="fa-solid fa-gear"></i>
-                <span> الإعدادات </span>
+
+                <span>
+                    الإعدادات
+                </span>
+
             </button>
+
+
         </nav>
+
     </section>
 
     <!-- JavaScript -->
     <script src="js/app.js"></script>
-
+    <script src="js/dashboard.js"></script>
 </body>
 
 </html>

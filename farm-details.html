@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B1F33">
+
+    <title>AgriScan - تفاصيل المزرعة</title>
+
+    <link rel="stylesheet" href="css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <section class="screen farm-details-screen">
+
+        <div class="farm-details-container">
+
+            <button
+                class="back-btn"
+                id="backToFarms"
+                type="button">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </button>
+
+
+            <!-- HEADER -->
+
+            <div class="farm-details-header">
+
+                <div class="farm-details-icon">
+
+                    <i class="fa-solid fa-wheat-awn"></i>
+
+                </div>
+
+                <h1 id="farmName">
+                    جاري التحميل...
+                </h1>
+
+                <p id="farmLocation">
+                    جاري تحميل بيانات المزرعة...
+                </p>
+
+            </div>
+
+
+            <!-- FARM INFO -->
+
+            <div class="farm-info-grid">
+
+                <div class="farm-info-card">
+
+                    <i class="fa-solid fa-ruler-combined"></i>
+
+                    <strong id="farmArea">
+                        -
+                    </strong>
+
+                    <span>
+                        المساحة بالأفدنة
+                    </span>
+
+                </div>
+
+
+                <div class="farm-info-card">
+
+                    <i class="fa-solid fa-seedling"></i>
+
+                    <strong id="farmCrop">
+                        -
+                    </strong>
+
+                    <span>
+                        المحصول
+                    </span>
+
+                </div>
+
+
+                <div class="farm-info-card">
+
+                    <i class="fa-solid fa-flask"></i>
+
+                    <strong id="scanCount">
+                        0
+                    </strong>
+
+                    <span>
+                        الفحوصات
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- LATEST SCAN -->
+
+            <div class="farm-section">
+
+                <div class="farm-section-title">
+
+                    <div>
+                        <span>
+                            آخر نتيجة
+                        </span>
+
+                        <h2>
+                            آخر فحص للتربة
+                        </h2>
+                    </div>
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+
+                <div id="latestScan">
+
+                    <p>
+                        جاري تحميل نتيجة الفحص...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- SCAN HISTORY -->
+
+            <div class="farm-section">
+
+                <div class="farm-section-title">
+
+                    <div>
+                        <span>
+                            السجل
+                        </span>
+
+                        <h2>
+                            فحوصات المزرعة
+                        </h2>
+                    </div>
+
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+
+                </div>
+
+
+                <div id="farmScans">
+
+                    <p>
+                        جاري تحميل الفحوصات...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="farm-new-scan-btn"
+                id="newFarmScan"
+                type="button">
+
+                <i class="fa-solid fa-plus"></i>
+
+                فحص جديد للتربة
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <script src="js/app.js"></script>
+    <script src="js/farm-details.js"></script>
+
+</body>
+
+</html>

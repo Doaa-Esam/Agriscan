@@ -28,15 +28,15 @@
                 <h2>الحساب</h2>
                 <div class="settings-card">
                     <div class="settings-icon"><i class="fa-solid fa-user"></i></div>
-                    <div class="settings-info"><strong>الملف الشخصي</strong><span>إدارة معلوماتك الشخصية</span></div>
-                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div class="settings-info"><strong>الملف الشخصي</strong><span id="profileEmail">جاري تحميل بيانات الحساب...</span></div>
+                    <button class="settings-arrow" type="button" id="profileBtn"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
 
                 <!-- settings-card -->
                 <div class="settings-card">
                     <div class="settings-icon"><i class="fa-solid fa-lock"></i></div>
                     <div class="settings-info"><strong>كلمة المرور</strong><span>تغيير كلمة مرور حسابك</span></div>
-                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="settings-arrow" id="passwordBtn" type="button"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
 
@@ -60,8 +60,10 @@
                 <h2>الجهاز</h2>
                 <div class="settings-card">
                     <div class="settings-icon"><i class="fa-solid fa-microchip"></i></div>
-                    <div class="settings-info"><strong>جهاز AgriScan</strong><span>الجهاز متصل</span></div>
-                    <span class="connected-status">متصل</span>
+                    <div class="settings-info"><strong id="deviceName">جهاز AgriScan</strong><span id="deviceFarm">جاري تحميل بيانات الجهاز...</span></div>
+                    <span class="connected-status" id="deviceStatus">جاري التحقق</span>
+                    <button class="settings-arrow" id="deviceDetailsBtn" type="button" aria-label="تفاصيل الجهاز">
+                    <i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
 
@@ -70,14 +72,14 @@
                 <div class="settings-card">
                     <div class="settings-icon"><i class="fa-solid fa-circle-question"></i></div>
                     <div class="settings-info"><strong>المساعدة والدعم</strong><span>احصل على المساعدة في استخدام AgriScan</span></div>
-                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="settings-arrow" id="supportBtn" type="button" aria-label="المساعدة والدعم"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
 
                 <!-- settings-card -->
                 <div class="settings-card">
                     <div class="settings-icon"><i class="fa-solid fa-circle-info"></i></div>
                     <div class="settings-info"><strong>عن AgriScan</strong><span>إصدار التطبيق 1.0.0</span></div>
-                    <button class="settings-arrow" type="button"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="settings-arrow" id="aboutBtn" type="button" aria-label="عن AgriScan"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
             <button class="logout-btn" id="logoutBtn" type="button"><i class="fa-solid fa-right-from-bracket"></i> تسجيل الخروج</button>

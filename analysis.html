@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0B1F33">
 
-    <title>AgriScan - تحليل</title>
+    <title>AgriScan - تحليل التربة</title>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="css/all.css">
@@ -81,50 +81,33 @@
 
                 <div
                     id="cropImages"
-                    style="
-                        display:flex;
-                        gap:12px;
-                        flex-wrap:wrap;
-                        margin-top:15px;
-                    ">
+                    class="crop-images">
                 </div>
 
             </div>
 
 
-            <!-- Overall Result -->
+            <!-- Overall Evaluation -->
 
             <div class="overall-result">
 
                 <div class="result-check">
-                    <i class="fa-solid fa-check"></i>
+                    <i class="fa-solid fa-chart-line"></i>
                 </div>
 
                 <div class="result-text">
 
                     <span>
-                        الصحة العامة للتربة
+                        حالة التقييم
                     </span>
 
                     <h2 id="soilHealth">
-                        جيدة
+                        جاري التحميل...
                     </h2>
 
                     <p id="soilHealthText">
-                        تربتك مناسبة للزراعة.
+                        جاري تحميل حالة التربة...
                     </p>
-
-                </div>
-
-                <div class="health-score">
-
-                    <strong id="healthScore">
-                        82%
-                    </strong>
-
-                    <span>
-                        درجة صحة التربة
-                    </span>
 
                 </div>
 
@@ -144,7 +127,7 @@
                         </span>
 
                         <h2>
-                            المرض المكتشف
+                            التشخيص المرضي
                         </h2>
 
                     </div>
@@ -166,12 +149,12 @@
                     <div class="issue-content">
 
                         <h3 id="diseaseName">
-                            جاري تحميل المرض...
+                            لا يوجد تشخيص مرضي
                         </h3>
 
 
                         <p id="diseaseSymptoms">
-                            جاري تحميل الأعراض...
+                            الجهاز الحالي يسجل قياسات التربة فقط، ولا توجد نتيجة تشخيص مرضي مسجلة لهذا الفحص.
                         </p>
 
 
@@ -179,7 +162,7 @@
                             class="issue-value"
                             id="diseaseTreatment">
 
-                            العلاج: جاري التحميل...
+                            العلاج: غير متاح بدون تشخيص مرضي حقيقي.
 
                         </span>
 
@@ -242,11 +225,11 @@
                         </span>
 
                         <strong id="phValue">
-                            6.4
+                            جاري التحميل...
                         </strong>
 
-                        <small class="normal">
-                            طبيعي
+                        <small id="phStatus">
+                            -
                         </small>
 
                     </div>
@@ -268,12 +251,8 @@
                             جاري التحميل...
                         </strong>
 
-                        <small
-                            id="moistureStatus"
-                            class="normal">
-
+                        <small id="moistureStatus">
                             -
-
                         </small>
 
                     </div>
@@ -295,12 +274,8 @@
                             جاري التحميل...
                         </strong>
 
-                        <small
-                            id="temperatureStatus"
-                            class="normal">
-
+                        <small id="temperatureStatus">
                             -
-
                         </small>
 
                     </div>
@@ -319,11 +294,11 @@
                         </span>
 
                         <strong id="nitrogenValue">
-                            18
+                            جاري التحميل...
                         </strong>
 
-                        <small class="low">
-                            منخفض
+                        <small id="nitrogenStatus">
+                            -
                         </small>
 
                     </div>
@@ -342,11 +317,11 @@
                         </span>
 
                         <strong id="phosphorusValue">
-                            32
+                            جاري التحميل...
                         </strong>
 
-                        <small class="normal">
-                            جيد
+                        <small id="phosphorusStatus">
+                            -
                         </small>
 
                     </div>
@@ -365,11 +340,11 @@
                         </span>
 
                         <strong id="potassiumValue">
-                            15
+                            جاري التحميل...
                         </strong>
 
-                        <small class="normal">
-                            جيد
+                        <small id="potassiumStatus">
+                            -
                         </small>
 
                     </div>
@@ -379,7 +354,7 @@
             </div>
 
 
-            <!-- AI Recommendation -->
+            <!-- Evaluation Summary -->
 
             <div class="recommendation-card">
 
@@ -387,18 +362,18 @@
 
                     <div class="ai-icon">
 
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <i class="fa-solid fa-lightbulb"></i>
 
                     </div>
 
                     <div>
 
                         <span>
-                            AgriScan AI
+                            AgriScan
                         </span>
 
                         <h2>
-                            التوصيات
+                            ملخص التقييم
                         </h2>
 
                     </div>
@@ -407,7 +382,7 @@
 
 
                 <p id="recommendationText">
-                    جاري تحميل التوصيات...
+                    جاري تحميل ملخص التقييم...
                 </p>
 
 
@@ -418,7 +393,7 @@
 
                     <i class="fa-solid fa-seedling"></i>
 
-                    عرض توصيات المحاصيل
+                    عرض معلومات المحصول
 
                 </button>
 
@@ -438,7 +413,7 @@
                     </span>
 
                     <strong id="scanDate">
-                        اليوم
+                        جاري التحميل...
                     </strong>
 
                 </div>
@@ -452,8 +427,8 @@
                         الجهاز
                     </span>
 
-                    <strong>
-                        AG-001
+                    <strong id="deviceCode">
+                        جاري التحميل...
                     </strong>
 
                 </div>
@@ -469,7 +444,6 @@
                 type="button">
 
                 <i class="fa-solid fa-bookmark"></i>
-
                 حفظ نتيجة الفحص
 
             </button>

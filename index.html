@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 
 <head>
     <meta charset="UTF-8">
@@ -8,29 +8,105 @@
     <title>AgriScan</title>
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"href="css/all.css">
+    <link rel="stylesheet" href="css/all.css">
+
     <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
     <!-- Splash Screen -->
 
     <section class="screen splash-screen">
         <div class="splash-content">
+
             <div class="logo-icon">
                 <i class="fa-solid fa-seedling"></i>
             </div>
+
             <h1>AgriScan</h1>
+
             <p>التشخيص الذكي للتربة</p>
+
             <div class="loading"></div>
+
         </div>
     </section>
 
-    <script>
-        setTimeout(function () {
 
-            window.location.href = "login.html";
+    <script>
+
+        const API_URL = "http://localhost:3000/api";
+
+
+        setTimeout(async function () {
+
+            const token =
+                localStorage.getItem("agriscan_token");
+
+
+            // NO TOKEN
+            if (!token) {
+
+                window.location.href = "login.html";
+
+                return;
+
+            }
+
+
+            // VERIFY TOKEN
+            try {
+
+                const response =
+                    await fetch(`${API_URL}/auth/me`, {
+
+                        method: "GET",
+
+                        headers: {
+                            "Authorization":
+                                `Bearer ${token}`
+                        }
+
+                    });
+
+
+                // VALID TOKEN
+                if (response.ok) {
+
+                    window.location.href =
+                        "dashboard.html";
+
+                    return;
+
+                }
+
+
+                // INVALID / EXPIRED TOKEN
+                localStorage.removeItem(
+                    "agriscan_token"
+                );
+
+                localStorage.removeItem(
+                    "agriscan_user"
+                );
+
+                window.location.href =
+                    "login.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "خطأ في التحقق من تسجيل الدخول:",
+                    error
+                );
+
+                window.location.href =
+                    "login.html";
+
+            }
 
         }, 5000);
 
