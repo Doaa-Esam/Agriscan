@@ -1,0 +1,11 @@
+# Environment variables and API secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*

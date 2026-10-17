@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "author": "Doaa Essam",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-a4988",
+      "id": "drv1",
+      "top": 20,
+      "left": 300,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper1",
+      "top": 20,
+      "left": 500,
+      "attrs": {
+        "size": "17",
+        "display": "steps"
+      }
+    },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": 250,
+      "left": 300,
+      "attrs": {
+        "temperature": "24",
+        "humidity": "55"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot1",
+      "top": 250,
+      "left": 500,
+      "attrs": {
+        "value": "550"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot2",
+      "top": 400,
+      "left": 500,
+      "attrs": {
+       "value": "650"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot3",
+      "top": 400,
+      "left": 700,
+      "attrs": {
+       "value": "450"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "pot4",
+      "top": 500,
+      "left": 500,
+      "attrs": {
+        "value": "550"
+      }
+   },
+    {   
+     "type": "wokwi-potentiometer",
+     "id": "pot5",
+     "top": 500,
+     "left": 700,
+     "attrs": {
+        "value": "700"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 250,
+      "left": 700,
+      "attrs": {
+        "color": "green",
+        "label": "SCAN"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:TX",
+      "$serialMonitor:RX",
+      "",
+      []
+    ],
+    [
+      "esp:RX",
+      "$serialMonitor:TX",
+      "",
+      []
+    ],
+
+    [
+      "esp:18",
+      "drv1:STEP",
+      "blue",
+      []
+    ],
+    [
+      "esp:19",
+      "drv1:DIR",
+      "violet",
+      []
+    ],
+
+    [
+      "drv1:RESET",
+      "drv1:SLEEP",
+      "orange",
+      []
+    ],
+
+    [
+      "stepper1:A-",
+      "drv1:1A",
+      "green",
+      []
+    ],
+    [
+      "stepper1:A+",
+      "drv1:1B",
+      "green",
+      []
+    ],
+    [
+      "stepper1:B+",
+      "drv1:2A",
+      "green",
+      []
+    ],
+    [
+      "stepper1:B-",
+      "drv1:2B",
+      "green",
+      []
+    ],
+
+    [
+      "drv1:VDD",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "drv1:GND",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "drv1:VMOT",
+      "esp:5V",
+      "red",
+      []
+    ],
+
+    [
+      "dht1:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "dht1:SDA",
+      "esp:27",
+      "green",
+      []
+    ],
+    [
+      "dht1:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+
+    [
+      "pot1:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "pot1:SIG",
+      "esp:34",
+      "green",
+      []
+    ],
+    [
+      "pot1:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+    [
+      "pot2:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "pot2:SIG",
+      "esp:35",
+      "green",
+      []
+    ],
+    [
+      "pot2:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+
+    [
+      "pot3:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "pot3:SIG",
+      "esp:32",
+      "green",
+      []
+   ],
+   [
+      "pot3:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+
+    [
+      "pot4:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "pot4:SIG",
+      "esp:33",
+      "green",
+      []
+    ],
+    [
+      "pot4:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+
+    [
+      "pot5:VCC",
+      "esp:3V3",
+      "red",
+      []
+    ],
+    [
+      "pot5:SIG",
+      "esp:36",
+      "green",
+       []
+    ],
+    [
+      "pot5:GND",
+      "esp:GND.2",
+      "black",
+      []
+    ],
+
+    [
+      "btn1:1.r",
+      "esp:23",
+      "green",
+      []
+    ],
+    [
+      "btn1:2.r",
+      "esp:GND.3",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

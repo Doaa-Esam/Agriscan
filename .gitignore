@@ -1,0 +1,24 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Node.js dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Generated ESP32 build artifacts
+ESP32-Wokwi/build/*.elf
+ESP32-Wokwi/build/*.mapESP32-Wokwi/build/**/*.elf
+ESP32-Wokwi/build/**/*.map
+ESP32-Wokwi/build/**/*.elf
+ESP32-Wokwi/build/*.elf
