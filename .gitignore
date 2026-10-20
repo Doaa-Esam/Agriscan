@@ -22,3 +22,7 @@ ESP32-Wokwi/build/*.mapESP32-Wokwi/build/**/*.elf
 ESP32-Wokwi/build/**/*.map
 ESP32-Wokwi/build/**/*.elf
 ESP32-Wokwi/build/*.elf
+
+# Local backup and database import copy
+Backend/server.js.backup
+Database/agriscan-tidb.sql
