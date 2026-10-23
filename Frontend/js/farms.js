@@ -1,4 +1,4 @@
-const FARMS_API_URL = "http://localhost:3000/api";
+const FARMS_API_URL = "https://accelerator-standard-giraffe.abasthan.app/api";
 
 // FARM PAGE MODE
 const farmsParams =

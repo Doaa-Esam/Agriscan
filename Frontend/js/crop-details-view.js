@@ -48,8 +48,7 @@ console.log(
 
 // API
 const cropDetailsAPI =
-    "http://localhost:3000/api";
-
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 
 // AUTH TOKEN
 function getCropDetailsToken() {

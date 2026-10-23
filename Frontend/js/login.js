@@ -1,7 +1,7 @@
 
 // LOGIN PAGE
 const LOGIN_API_URL =
-    "http://localhost:3000/api";
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 const loginForm =
     document.getElementById("loginForm");
 

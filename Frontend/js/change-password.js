@@ -1,7 +1,7 @@
 
 // CHANGE PASSWORD PAGE
 const CHANGE_PASSWORD_API_URL =
-    "http://localhost:3000/api";
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 
 
 // BACK TO SETTINGS

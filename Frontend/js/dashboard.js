@@ -10,7 +10,7 @@ if (isDashboardPage) {
 
     // API
     const dashboardAPI =
-        "http://localhost:3000/api";
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 
     // ELEMENTS
     const dashboardSoilStatus =

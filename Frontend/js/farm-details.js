@@ -1,6 +1,6 @@
 
 // AGRISCAN - FARM DETAILS
-const FARM_DETAILS_API_URL = "http://localhost:3000/api";
+const FARM_DETAILS_API_URL = "https://accelerator-standard-giraffe.abasthan.app/api";
 
 // AUTHENTICATION
 function getAuthHeaders() {

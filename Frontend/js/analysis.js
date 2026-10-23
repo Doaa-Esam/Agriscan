@@ -1,7 +1,7 @@
 
 // AGRISCAN - ANALYSIS PAGE
 const ANALYSIS_API_URL =
-    "http://localhost:3000/api";
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 
 
 // AUTHENTICATION
@@ -1021,7 +1021,7 @@ if (!cropResponse.ok) {
 
 
                         img.src =
-                           `http://localhost:3000${image.image_path}`;
+                          `https://accelerator-standard-giraffe.abasthan.app${image.image_path}`;
 
                         img.alt =
                             cropData.crop?.name ||

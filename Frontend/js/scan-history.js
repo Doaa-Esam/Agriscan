@@ -1,7 +1,7 @@
 
 // AGRISCAN - SCAN HISTORY
 const SCAN_HISTORY_API_URL =
-    "http://localhost:3000/api";
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 
 
 // AUTHENTICATION

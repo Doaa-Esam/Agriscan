@@ -169,8 +169,7 @@ if (isSoilScanPage) {
 
     // API
     const soilScanAPI =
-        "http://localhost:3000/api";
-
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 
     // GET FARM ID
     const soilScanParams =
@@ -1556,8 +1555,7 @@ if (logoutBtn) {
 }
 
 // SETTINGS DATA
-const APP_API_URL = "http://localhost:3000/api";
-
+const APP_API_URL = "https://accelerator-standard-giraffe.abasthan.app/api";
 
 // LOAD ACCOUNT DATA
 async function loadSettingsAccount() {

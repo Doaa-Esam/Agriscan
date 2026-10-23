@@ -1,8 +1,6 @@
-
 // API
 const CROP_DETAILS_API =
-    "http://localhost:3000/api";
-
+    "https://accelerator-standard-giraffe.abasthan.app/api";
 
 // GET ELEMENTS
 const cropGrid =
