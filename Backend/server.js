@@ -69,28 +69,31 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 const isCloudDatabase = process.env.DB_HOST &&
     process.env.DB_HOST !== "localhost";
 
-const db = mysql.createConnection({
+const db = mysql.createPool({
     host: process.env.DB_HOST || "localhost",
     port: Number(process.env.DB_PORT || (isCloudDatabase ? 4000 : 3306)),
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "agriscan",
     ...(isCloudDatabase ? {
-        ssl: {
-            minVersion: "TLSv1.2"
-        }
-    } : {})
+        ssl: { minVersion: "TLSv1.2" }
+    } : {}),
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
+    enableKeepAlive: true,
+    keepAliveInitialDelay: 0
 });
 
-db.connect((err) => {
+db.getConnection((err, connection) => {
     if (err) {
-        console.error("Database connection failed:", err.message);
+        console.error("MySQL connection failed:", err);
         return;
     }
 
     console.log("MySQL connected successfully!");
+    connection.release();
 });
-
 
 // HOME
 app.get("/", (req, res) => {
