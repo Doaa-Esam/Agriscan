@@ -27,32 +27,11 @@ if (backToSettings) {
 
 // LOAD DEVICE DETAILS
 async function loadDeviceDetails() {
-
-    const deviceName =
-        document.getElementById(
-            "deviceName"
-        );
-
-    const deviceCode =
-        document.getElementById(
-            "deviceCode"
-        );
-
-    const deviceStatus =
-        document.getElementById(
-            "deviceStatus"
-        );
-
-    const deviceFarm =
-        document.getElementById(
-            "deviceFarm"
-        );
-
-    const deviceConnectedAt =
-        document.getElementById(
-            "deviceConnectedAt"
-        );
-
+    const deviceName = document.getElementById("deviceName");
+    const deviceCode = document.getElementById("deviceCode");
+    const deviceStatus = document.getElementById("deviceStatus");
+    const deviceFarm = document.getElementById("deviceFarm");
+    const deviceConnectedAt = document.getElementById("deviceConnectedAt");
 
     if (
         !deviceName ||
@@ -64,144 +43,85 @@ async function loadDeviceDetails() {
         return;
     }
 
+    const token = localStorage.getItem("agriscan_token");
 
-    // GET DEVICE CODE
-    const savedDeviceCode =
-        sessionStorage.getItem(
-            "agriscan_device_code"
-        ) || "AG-001";
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
 
+    function showNoDevice() {
+        deviceName.textContent = "جهاز AgriScan";
+        deviceCode.textContent = "غير متاح";
+        deviceStatus.textContent = "غير مرتبط";
+        deviceFarm.textContent = "لا يوجد جهاز مرتبط بحسابك";
+        deviceConnectedAt.textContent = "غير متاح";
+    }
 
     try {
+        const response = await fetch(
+            `${DEVICE_DETAILS_API_URL}/devices/my-device`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
 
-        const response =
-            await fetch(
-                `${DEVICE_DETAILS_API_URL}/devices/${encodeURIComponent(savedDeviceCode)}`
-            );
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem("agriscan_token");
+            localStorage.removeItem("agriscan_user");
+            window.location.href = "login.html";
+            return;
+        }
 
+        if (response.status === 404) {
+            showNoDevice();
+            return;
+        }
 
         if (!response.ok) {
-
-            throw new Error(
-                "Failed to load device details"
-            );
-
+            throw new Error("Failed to load device details");
         }
 
+        const device = await response.json();
 
-        const device =
-            await response.json();
+        deviceName.textContent = device.name || "جهاز AgriScan";
+        deviceCode.textContent = device.device_code || "غير متاح";
+        deviceFarm.textContent = device.farm_name || "غير مرتبط بمزرعة";
 
-
-        // DEVICE NAME
-        deviceName.textContent =
-            device.name ||
-            "غير متاح";
-
-
-        // DEVICE CODE
-        deviceCode.textContent =
-            device.device_code ||
-            savedDeviceCode;
-
-
-        // DEVICE STATUS
-        if (
-            device.status ===
-            "CONNECTED"
-        ) {
-
-            deviceStatus.textContent =
-                "متصل";
-
-        } else if (
-            device.status ===
-            "DISCONNECTED"
-        ) {
-
-            deviceStatus.textContent =
-                "غير متصل";
-
+        if (device.status === "CONNECTED") {
+            deviceStatus.textContent = "متصل";
+        } else if (device.status === "DISCONNECTED") {
+            deviceStatus.textContent = "غير متصل";
         } else {
-
-            deviceStatus.textContent =
-                "غير محدد";
-
+            deviceStatus.textContent = "حالة الاتصال غير محددة";
         }
 
-
-        // CONNECTED FARM
-        deviceFarm.textContent =
-            device.farm_name
-                ? device.farm_name
-                : "غير مرتبط بمزرعة";
-
-
-        // CONNECTION DATE
         if (device.connected_at) {
-
-            const connectedDate =
-                new Date(
-                    device.connected_at
-                );
-
-
-            if (
-                !Number.isNaN(
-                    connectedDate.getTime()
-                )
-            ) {
-
-                deviceConnectedAt.textContent =
-                    connectedDate.toLocaleString(
-                        "ar-EG",
-                        {
-                            dateStyle:
-                                "medium",
-                            timeStyle:
-                                "short"
-                        }
-                    );
-
-            } else {
-
-                deviceConnectedAt.textContent =
-                    "غير متاح";
-
-            }
-
-        } else {
+            const connectedDate = new Date(device.connected_at);
 
             deviceConnectedAt.textContent =
-                "غير متاح";
-
+                !Number.isNaN(connectedDate.getTime())
+                    ? connectedDate.toLocaleString("ar-EG", {
+                        dateStyle: "medium",
+                        timeStyle: "short"
+                    })
+                    : "غير متاح";
+        } else {
+            deviceConnectedAt.textContent = "غير متاح";
         }
 
     } catch (error) {
+        console.error("خطأ في تحميل بيانات الجهاز:", error);
 
-        console.error(
-            "خطأ في تحميل بيانات الجهاز:",
-            error
-        );
-
-
-        deviceName.textContent =
-            "تعذر تحميل البيانات";
-
-        deviceCode.textContent =
-            "تعذر تحميل البيانات";
-
-        deviceStatus.textContent =
-            "غير متاح";
-
-        deviceFarm.textContent =
-            "تعذر تحميل البيانات";
-
-        deviceConnectedAt.textContent =
-            "غير متاح";
-
+        deviceName.textContent = "تعذر تحميل البيانات";
+        deviceCode.textContent = "غير متاح";
+        deviceStatus.textContent = "غير متاح";
+        deviceFarm.textContent = "تعذر تحميل بيانات الجهاز";
+        deviceConnectedAt.textContent = "غير متاح";
     }
-
 }
 
 loadDeviceDetails();

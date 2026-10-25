@@ -1654,129 +1654,74 @@ async function loadSettingsAccount() {
 
 // LOAD DEVICE DATA
 async function loadSettingsDevice() {
+    const deviceName = document.getElementById("deviceName");
+    const deviceFarm = document.getElementById("deviceFarm");
+    const deviceStatus = document.getElementById("deviceStatus");
 
-    const deviceName =
-        document.getElementById(
-            "deviceName"
-        );
-
-    const deviceFarm =
-        document.getElementById(
-            "deviceFarm"
-        );
-
-    const deviceStatus =
-        document.getElementById(
-            "deviceStatus"
-        );
-
-
-    if (
-        !deviceName ||
-        !deviceFarm ||
-        !deviceStatus
-    ) {
-
+    if (!deviceName || !deviceFarm || !deviceStatus) {
         return;
-
     }
 
+    const token = localStorage.getItem("agriscan_token");
 
-    const deviceCode =
-        sessionStorage.getItem(
-            "agriscan_device_code"
-        ) || "AG-001";
-
+    if (!token) {
+        deviceName.textContent = "جهاز AgriScan";
+        deviceFarm.textContent = "سجّلي الدخول لعرض بيانات الجهاز";
+        deviceStatus.textContent = "غير متاح";
+        return;
+    }
 
     try {
-
-        const response =
-            await fetch(
-                `${APP_API_URL}/devices/${encodeURIComponent(deviceCode)}`
-            );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                "Failed to load device data"
-            );
-
-        }
-
-
-        const device =
-            await response.json();
-
-
-        deviceName.textContent =
-            device.name ||
-            "جهاز AgriScan";
-
-
-        if (device.farm_name) {
-
-            deviceFarm.textContent =
-                `مرتبط بـ ${device.farm_name}`;
-
-        }
-
-        else {
-
-            deviceFarm.textContent =
-                "غير مرتبط بمزرعة";
-
-        }
-
-
-        if (device.status === "CONNECTED") {
-
-            deviceStatus.textContent =
-                "متصل";
-
-        }
-
-        else if (
-            device.status === "DISCONNECTED"
-        ) {
-
-            deviceStatus.textContent =
-                "غير متصل";
-
-        }
-
-        else {
-
-            deviceStatus.textContent =
-                "غير محدد";
-
-        }
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "خطأ في تحميل بيانات الجهاز:",
-            error
+        const response = await fetch(
+            `${APP_API_URL}/devices/my-device`,
+            {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
         );
 
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem("agriscan_token");
+            localStorage.removeItem("agriscan_user");
+            window.location.href = "login.html";
+            return;
+        }
 
-        deviceName.textContent =
-            "جهاز AgriScan";
+        if (response.status === 404) {
+            deviceName.textContent = "جهاز AgriScan";
+            deviceFarm.textContent = "لا يوجد جهاز مرتبط بحسابك";
+            deviceStatus.textContent = "غير مرتبط";
+            return;
+        }
 
+        if (!response.ok) {
+            throw new Error("Failed to load user device");
+        }
 
-        deviceFarm.textContent =
-            "تعذر التحقق من الجهاز";
+        const device = await response.json();
 
+        deviceName.textContent = device.name || "جهاز AgriScan";
+        deviceFarm.textContent = device.farm_name
+            ? `مرتبط بـ ${device.farm_name}`
+            : "غير مرتبط بمزرعة";
 
-        deviceStatus.textContent =
-            "غير متاح";
+        if (device.status === "CONNECTED") {
+            deviceStatus.textContent = "متصل";
+        } else if (device.status === "DISCONNECTED") {
+            deviceStatus.textContent = "غير متصل";
+        } else {
+            deviceStatus.textContent = "حالة الاتصال غير محددة";
+        }
 
+    } catch (error) {
+        console.error("خطأ في تحميل بيانات الجهاز:", error);
+        deviceName.textContent = "جهاز AgriScan";
+        deviceFarm.textContent = "تعذر تحميل بيانات الجهاز";
+        deviceStatus.textContent = "غير متاح";
     }
-
 }
-
 
 // START SETTINGS DATA
 loadSettingsAccount();

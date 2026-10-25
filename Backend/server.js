@@ -3007,6 +3007,54 @@ app.delete(
     }
 );
 
+// GET DEVICE LINKED TO THE LOGGED-IN USER
+app.get(
+    "/api/devices/my-device",
+    authenticateToken,
+    (req, res) => {
+        const sql = `
+            SELECT
+                devices.id,
+                devices.device_code,
+                devices.name,
+                devices.status,
+                devices.connected_at,
+                farms.name AS farm_name
+            FROM devices
+            INNER JOIN farms
+                ON devices.farm_id = farms.id
+            WHERE farms.user_id = ?
+            ORDER BY devices.id ASC
+            LIMIT 1
+        `;
+
+        db.query(
+            sql,
+            [req.user.userId],
+            (err, results) => {
+                if (err) {
+                    console.error(
+                        "Error loading user device:",
+                        err
+                    );
+
+                    return res.status(500).json({
+                        message: "تعذر تحميل بيانات الجهاز"
+                    });
+                }
+
+                if (results.length === 0) {
+                    return res.status(404).json({
+                        message: "لا يوجد جهاز مرتبط بمزارع حسابك"
+                    });
+                }
+
+                return res.json(results[0]);
+            }
+        );
+    }
+);
+
 // DEVICES
 
 // GET DEVICE BY CODE
