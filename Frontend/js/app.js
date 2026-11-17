@@ -1376,125 +1376,48 @@ if (notificationToggle) {
 
 }
 
+// SETTINGS ROWS CLICK
+function makeSettingsRowClickable(buttonId, page) {
+    const button = document.getElementById(buttonId);
 
-// LANGUAGE
-const languageBtn =
-    document.getElementById(
-        "languageBtn"
-    );
+    if (!button) return;
 
-if (languageBtn) {
+    const settingsCard = button.closest(".settings-card");
 
-    languageBtn.addEventListener(
-        "click",
-        function() {
-            window.location.href =
-                "language.html";
+    if (!settingsCard) return;
+
+    settingsCard.style.cursor = "pointer";
+
+    settingsCard.addEventListener("click", function(event) {
+        if (event.target.closest("button, a, input, label, .switch")) {
+            return;
         }
-    );
 
-}
+        window.location.href = page;
+    });
 
-// DEVICE DETAILS PAGE
-const deviceDetailsBtn =
-    document.getElementById(
-        "deviceDetailsBtn"
-    );
-
-if (deviceDetailsBtn) {
-
-    deviceDetailsBtn.addEventListener(
-        "click",
-        function() {
-
-            window.location.href =
-                "device-details.html";
-
-        }
-    );
-
-}
-
-// SUPPORT PAGE
-const supportBtn =
-    document.getElementById(
-        "supportBtn"
-    );
-
-if (supportBtn) {
-
-    supportBtn.addEventListener(
-        "click",
-        function() {
-
-            window.location.href =
-                "support.html";
-
-        }
-    );
-
-}
-
-
-// ABOUT AGRISCAN PAGE
-const aboutBtn =
-    document.getElementById(
-        "aboutBtn"
-    );
-
-if (aboutBtn) {
-
-    aboutBtn.addEventListener(
-        "click",
-        function() {
-
-            window.location.href =
-                "about.html";
-
-        }
-    );
-
+    button.addEventListener("click", function() {
+        window.location.href = page;
+    });
 }
 
 // PROFILE PAGE
-const profileBtn =
-    document.getElementById(
-        "profileBtn"
-    );
-
-if (profileBtn) {
-
-    profileBtn.addEventListener(
-        "click",
-        function() {
-
-            window.location.href =
-                "profile.html";
-
-        }
-    );
-
-}
+makeSettingsRowClickable("profileBtn", "profile.html");
 
 // CHANGE PASSWORD PAGE
-const passwordBtn =
-    document.getElementById(
-        "passwordBtn"
-    );
+makeSettingsRowClickable("passwordBtn", "change-password.html");
 
-if (passwordBtn) {
+// LANGUAGE PAGE
+makeSettingsRowClickable("languageBtn", "language.html");
 
-    passwordBtn.addEventListener(
-        "click",
-        function() {
+// DEVICE DETAILS PAGE
+makeSettingsRowClickable("deviceDetailsBtn", "device-details.html");
 
-            window.location.href =
-                "change-password.html";
+// SUPPORT PAGE
+makeSettingsRowClickable("supportBtn", "support.html");
 
-        }
-    );
-
-}
+// ABOUT AGRISCAN PAGE
+makeSettingsRowClickable("aboutBtn", "about.html");
 
 // LOGOUT
 const logoutBtn =
