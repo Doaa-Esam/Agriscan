@@ -2557,22 +2557,36 @@ body {
 
 .farm-empty-state {
     text-align: center;
-    padding: 30px 15px;
+    padding: 35px 20px;
     color: #87958e;
 }
 
 .farm-empty-state i {
-    display: block;
-    font-size: 35px;
-    color: #78b82a;
-    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #e8f6d9;
+    color: #5f9820;
+    font-size: 27px;
+}
+
+.farm-empty-state h3 {
+    margin: 0 0 9px;
+    color: #263b2d;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .farm-empty-state p {
     margin: 0;
+    color: #87958e;
     font-size: 14px;
+    line-height: 1.8;
 }
-
 .farm-new-scan-btn {
     width: 100%;
     border: none;
@@ -2914,4 +2928,30 @@ body {
 .password-toast.error {
     background: #fff1f1;
     color: #c45555;
+}
+
+.history-empty-state {
+    text-align: center;
+    padding: 35px 20px;
+    color: #87958e;
+}
+
+.history-empty-state i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background: #e8f6d9;
+    color: #5f9820;
+    font-size: 27px;
+}
+
+.history-empty-state p {
+    margin: 0;
+    color: #87958e;
+    font-size: 14px;
+    line-height: 1.8;
 }

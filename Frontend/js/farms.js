@@ -125,21 +125,16 @@ async function loadFarms() {
         ) {
 
             farmsContainer.innerHTML = `
-                <div class="empty-state">
-
-                    <i class="fa-solid fa-wheat-awn"></i>
-
-                    <h3>
-                        لا توجد مزارع حتى الآن
+                <div class="farm-empty-state">
+                  <i class="fa-solid ${scanMode ? 'fa-magnifying-glass' : 'fa-wheat-awn'}"></i>
+                   <h3>
+                       ${scanMode ? 'لا توجد مزارع لبدء الفحص' : 'لا توجد مزارع حتى الآن'}
                     </h3>
-
                     <p>
-                        أضيفي أول مزرعة لبدء إدارة بياناتك.
+                      ${scanMode ? 'أضيفي مزرعة أولاً، ثم يمكنك بدء فحص التربة.' : 'أضيفي أول مزرعة لبدء إدارة بياناتك.'}
                     </p>
-
                 </div>
             `;
-
 
             if (farmsCount) {
                 farmsCount.textContent = "0";
