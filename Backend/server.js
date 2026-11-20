@@ -75,24 +75,31 @@ const db = mysql.createPool({
     user: process.env.DB_USER || "root",
     password: process.env.DB_PASSWORD || "",
     database: process.env.DB_NAME || "agriscan",
+
     ...(isCloudDatabase ? {
         ssl: { minVersion: "TLSv1.2" }
     } : {}),
+
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 5,
+    maxIdle: 2,
+    idleTimeout: 60000,
     queueLimit: 0,
+
     enableKeepAlive: true,
     keepAliveInitialDelay: 0
 });
 
-db.getConnection((err, connection) => {
-    if (err) {
-        console.error("MySQL connection failed:", err);
-        return;
-    }
+// HANDLE DATABASE CONNECTIONS
+db.on("connection", (connection) => {
+    console.log("MySQL pool connection established");
 
-    console.log("MySQL connected successfully!");
-    connection.release();
+    connection.on("error", (err) => {
+        console.error(
+            "MySQL connection error:",
+            err.code || err.message
+        );
+    });
 });
 
 // HOME
