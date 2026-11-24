@@ -450,7 +450,7 @@ app.post(
                                         status,
                                         recommendation
                                     )
-                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 `;
 
                                 connection.query(
