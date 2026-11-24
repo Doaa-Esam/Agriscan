@@ -394,29 +394,53 @@ app.post(
 
 
                         // START DATABASE TRANSACTION
-                        db.beginTransaction(
-                            (err) => {
+                        db.getConnection((err, connection) => {
+
+                            if (err) {
+                                console.error(
+                                    "Failed to get database connection:",
+                                    err
+                                );
+
+                                return res.status(500).json({
+                                    error: "Failed to get database connection"
+                                });
+                            }
+
+                            connection.beginTransaction((err) => {
 
                                 if (err) {
-
                                     console.error(
                                         "Failed to start transaction:",
                                         err
                                     );
 
-                                    return res.status(500).json({
-                                        error:
-                                            "Failed to start scan transaction"
-                                    });
+                                    connection.release();
 
+                                    return res.status(500).json({
+                                        error: "Failed to start scan transaction"
+                                    });
                                 }
 
+                                // ROLLBACK HELPER
+                                const rollbackAndRespond = (statusCode, errorMessage) => {
+                                    connection.rollback(() => {
+                                        connection.release();
+
+                                        if (!res.headersSent) {
+                                            res.status(statusCode).json({
+                                                error: errorMessage
+                                            });
+                                        }
+                                    });
+                                };
 
                                 // SAVE SCAN
                                 const scanSql = `
                                     INSERT INTO scans (
                                         farm_id,
                                         device_id,
+                                        scan_request_id,
                                         moisture,
                                         temperature,
                                         ph,
@@ -426,59 +450,41 @@ app.post(
                                         status,
                                         recommendation
                                     )
-
                                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                 `;
 
-
-                                db.query(
+                                connection.query(
                                     scanSql,
                                     [
                                         device.farm_id,
                                         device.id,
+                                        Number(scan_request_id),
                                         moistureValue,
                                         temperatureValue,
                                         phValue,
                                         nitrogenValue,
                                         phosphorusValue,
                                         potassiumValue,
-
-                                        // NO AUTOMATIC EVALUATION
                                         "PENDING_EVALUATION",
-
                                         "Evaluation pending"
                                     ],
                                     (err, result) => {
 
                                         if (err) {
+                                            console.error("Failed to save scan:", err);
 
-                                            console.error(
-                                                "Failed to save scan:",
-                                                err
+                                            return rollbackAndRespond(
+                                                500,
+                                                "Failed to save scan"
                                             );
-
-                                            return db.rollback(
-                                                () => {
-
-                                                    res.status(500).json({
-                                                        error:
-                                                            "Failed to save scan"
-                                                    });
-
-                                                }
-                                            );
-
                                         }
-
 
                                         // COMPLETE SCAN REQUEST
                                         const completeRequestSql = `
                                             UPDATE scan_requests
-
                                             SET
                                                 status = 'COMPLETED',
                                                 completed_at = NOW()
-
                                             WHERE
                                                 id = ?
                                                 AND device_id = ?
@@ -486,8 +492,7 @@ app.post(
                                                 AND status = 'PROCESSING'
                                         `;
 
-
-                                        db.query(
+                                        connection.query(
                                             completeRequestSql,
                                             [
                                                 Number(scan_request_id),
@@ -497,118 +502,59 @@ app.post(
                                             (err, updateResult) => {
 
                                                 if (err) {
-
                                                     console.error(
                                                         "Failed to complete scan request:",
                                                         err
                                                     );
 
-                                                    return db.rollback(
-                                                        () => {
-
-                                                            res.status(500).json({
-                                                                error:
-                                                                    "Failed to complete scan request"
-                                                            });
-
-                                                        }
+                                                    return rollbackAndRespond(
+                                                        500,
+                                                        "Failed to complete scan request"
                                                     );
-
                                                 }
 
-
-                                                // REQUEST WAS NOT UPDATED
-                                                if (
-                                                    updateResult.affectedRows === 0
-                                                ) {
-
-                                                    console.error(
-                                                        "Scan request could not be completed."
+                                                if (updateResult.affectedRows === 0) {
+                                                    return rollbackAndRespond(
+                                                        409,
+                                                        "Scan request could not be completed"
                                                     );
-
-                                                    return db.rollback(
-                                                        () => {
-
-                                                            res.status(409).json({
-                                                                error:
-                                                                    "Scan request could not be completed"
-                                                            });
-
-                                                        }
-                                                    );
-
                                                 }
-
 
                                                 // COMMIT TRANSACTION
-                                                db.commit(
-                                                    (err) => {
+                                                connection.commit((err) => {
 
-                                                        if (err) {
-
-                                                            console.error(
-                                                                "Failed to commit scan transaction:",
-                                                                err
-                                                            );
-
-                                                            return db.rollback(
-                                                                () => {
-
-                                                                    res.status(500).json({
-                                                                        error:
-                                                                            "Failed to complete scan transaction"
-                                                                    });
-
-                                                                }
-                                                            );
-
-                                                        }
-
-
-                                                        // SUCCESS
-                                                        console.log(
-                                                            "Scan measurements saved successfully."
+                                                    if (err) {
+                                                        console.error(
+                                                            "Failed to commit scan transaction:",
+                                                            err
                                                         );
 
-
-                                                        res.status(201).json({
-
-                                                            message:
-                                                                "Scan measurements saved successfully",
-
-                                                            id:
-                                                                result.insertId,
-
-                                                            scan_request_id:
-                                                                Number(
-                                                                    scan_request_id
-                                                                ),
-
-                                                            farm_id:
-                                                                device.farm_id,
-
-                                                            farm_name:
-                                                                device.farm_name,
-
-                                                            crop_id:
-                                                                device.crop_id,
-
-                                                            device_id:
-                                                                device.id,
-
-                                                            device_code:
-                                                                device.device_code,
-
-                                                            device_name:
-                                                                device.name,
-
-                                                            status:
-                                                                "PENDING_EVALUATION"
-
-                                                        });
-
+                                                        return rollbackAndRespond(
+                                                            500,
+                                                            "Failed to complete scan transaction"
+                                                        );
                                                     }
-                                                );
+
+                                                    console.log(
+                                                        "Scan measurements saved successfully."
+                                                    );
+
+                                                    connection.release();
+
+                                                    return res.status(201).json({
+                                                        message: "Scan measurements saved successfully",
+                                                        id: result.insertId,
+                                                        scan_request_id: Number(scan_request_id),
+                                                        farm_id: device.farm_id,
+                                                        farm_name: device.farm_name,
+                                                        crop_id: device.crop_id,
+                                                        device_id: device.id,
+                                                        device_code: device.device_code,
+                                                        device_name: device.name,
+                                                        status: "PENDING_EVALUATION"
+                                                    });
+
+                                                });
 
                                             }
                                         );
@@ -616,8 +562,9 @@ app.post(
                                     }
                                 );
 
-                            }
-                        );
+                            });
+
+                        });
 
                     }
                 );
