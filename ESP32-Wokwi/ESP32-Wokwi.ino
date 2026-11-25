@@ -322,6 +322,66 @@ void setup() {
     Serial.println();
     Serial.println("WiFi connected!");
 
+    WiFiClientSecure testClient;
+testClient.setInsecure();
+
+HTTPClient testHttp;
+testHttp.setTimeout(15000);
+testHttp.setConnectTimeout(15000);
+
+Serial.println("Testing HTTPS connection...");
+
+if (testHttp.begin(testClient, "https://www.google.com")) {
+    int code = testHttp.GET();
+    Serial.print("Google HTTPS result: ");
+    Serial.println(code);
+    testHttp.end();
+}
+
+WiFiClientSecure backendClient;
+backendClient.setInsecure();
+
+HTTPClient backendHttp;
+backendHttp.setTimeout(15000);
+backendHttp.setConnectTimeout(15000);
+
+Serial.println("Testing Abasthan HTTPS...");
+
+if (backendHttp.begin(backendClient, "https://accelerator-standard-giraffe.abasthan.app/")) {
+    int code = backendHttp.GET();
+    Serial.print("Abasthan HTTPS result: ");
+    Serial.println(code);
+    Serial.println(backendHttp.getString());
+    backendHttp.end();
+}
+
+WiFiClientSecure scanTestClient;
+scanTestClient.setInsecure();
+
+HTTPClient scanTestHttp;
+scanTestHttp.setReuse(false);
+scanTestHttp.setTimeout(20000);
+scanTestHttp.setConnectTimeout(20000);
+
+String scanTestURL = String(backendURL) +
+    "/api/scan-requests/device/" + deviceCode;
+
+Serial.println("Testing actual scan request endpoint...");
+
+if (scanTestHttp.begin(scanTestClient, scanTestURL)) {
+    int code = scanTestHttp.GET();
+
+    Serial.print("Scan endpoint HTTP code: ");
+    Serial.println(code);
+
+    Serial.println("Scan endpoint response:");
+    Serial.println(scanTestHttp.getString());
+
+    scanTestHttp.end();
+}
+
+scanTestClient.stop();
+
     Serial.print("ESP32 IP: ");
     Serial.println(WiFi.localIP());
 
@@ -457,6 +517,7 @@ void loop() {
         } else {
             Serial.println("Scan submission failed.");
         }
+    }
 
     // WAIT BEFORE CHECKING AGAIN
     delay(1000);
