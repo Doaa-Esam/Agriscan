@@ -1670,3 +1670,57 @@ if (backToDashboardFromFarms) {
     );
 
 }
+
+// GLOBAL BOTTOM NAVIGATION
+(function () {
+    const page = window.location.pathname.split("/").pop();
+
+    const pages = [
+        "dashboard.html",
+        "farms.html",
+        "farm-details.html",
+        "connect-device.html",
+        "soil-scan.html",
+        "analysis.html",
+        "crop-details.html",
+        "crop-details-view.html",
+        "scan-history.html",
+        "settings.html",
+        "device-details.html"
+    ];
+
+    if (!pages.includes(page)) return;
+    if (document.querySelector(".bottom-nav")) return;
+
+    const nav = document.createElement("nav");
+    nav.className = "bottom-nav";
+
+    const items = [
+        { icon: "fa-house", label: "الرئيسية", url: "dashboard.html", pages: ["dashboard.html"] },
+        { icon: "fa-seedling", label: "المزارع", url: "farms.html", pages: ["farms.html", "farm-details.html", "connect-device.html"] },
+        { icon: "fa-magnifying-glass", label: "الفحص", url: "farms.html?action=scan", pages: ["soil-scan.html"] },
+        { icon: "fa-chart-column", label: "السجل", url: "scan-history.html", pages: ["scan-history.html", "analysis.html"] },
+        { icon: "fa-gear", label: "الإعدادات", url: "settings.html", pages: ["settings.html", "device-details.html", "crop-details.html", "crop-details-view.html"] }
+    ];
+
+    items.forEach(item => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.innerHTML = `
+            <i class="fa-solid ${item.icon}"></i>
+            <span>${item.label}</span>
+        `;
+
+        if (item.pages.includes(page)) {
+            button.classList.add("active");
+        }
+
+        button.addEventListener("click", () => {
+            window.location.href = item.url;
+        });
+
+        nav.appendChild(button);
+    });
+
+    document.body.appendChild(nav);
+})();
