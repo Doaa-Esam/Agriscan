@@ -2955,3 +2955,13 @@ body {
     font-size: 14px;
     line-height: 1.8;
 }
+
+/* Keep bottom navigation order fixed on all pages */
+.bottom-nav {
+    direction: ltr !important;
+    flex-direction: row !important;
+}
+
+.bottom-nav button {
+    direction: rtl;
+}
